@@ -152,7 +152,11 @@ const Projects = ({ projects, setProjects, selectedDate, onToggle }) => {
         </div>
         <Box className="projects-box">
           <Box
-            style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)" }}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(6, 1fr)",
+              color: theme.palette.secondary.light,
+            }}
           >
             <Box style={{ display: "inline-flex" }}>
               <Box

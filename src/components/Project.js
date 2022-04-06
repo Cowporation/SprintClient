@@ -44,7 +44,7 @@ const Project = (props) => {
           color: theme.palette.secondary.light,
           display: "block",
           position: "relative",
-          borderBottom: "0.6px solid grey",
+          borderBottom: "0.6px solid black",
           borderRadius: 0,
           padding: 15,
           width: "100vh",
