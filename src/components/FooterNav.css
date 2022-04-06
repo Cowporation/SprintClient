@@ -1,0 +1,13 @@
+footer {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    min-height: 3rem;
+    align-items: center;
+    justify-content:space-evenly;
+    z-index: 999;
+}
+.go-today:hover {
+    cursor: pointer;
+}
