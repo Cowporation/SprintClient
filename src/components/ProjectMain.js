@@ -61,8 +61,8 @@ const ProjectMain = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="side-pan">
-        <Card style={{ display: "flex" }}>
+      <div style={{ height: "100vh" }}>
+        <Card style={{ display: "flex", height: "100%" }}>
           <Paper sx={{ bgcolor: theme.palette.secondary.dark }} elevation={3}>
             <Box p={2}>
               <div className=" s-current-month">

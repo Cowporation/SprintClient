@@ -154,17 +154,20 @@ const Projects = ({ projects, setProjects, selectedDate, onToggle }) => {
           <Box
             style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)" }}
           >
-            <Box
-              style={{
-                display: "flex",
-                justifyContent: "left",
-                backgroundColor: theme.palette.primary.main,
-                color: theme.palette.secondary.dark,
-                borderRadius: "0.6rem 0.6rem 0 0",
-                padding: "0.3rem",
-              }}
-            >
-              Name
+            <Box style={{ display: "inline-flex" }}>
+              <Box
+                style={{
+                  display: "inline-flex",
+                  height: "19px",
+                  backgroundColor: theme.palette.primary.dark,
+                  borderRadius: "4px 4px 0 0",
+                  padding: "0 8px",
+                  textTransform: "uppercase",
+                  alignItems: "center",
+                }}
+              >
+                Name
+              </Box>
             </Box>
             <Box style={{ display: "flex", justifyContent: "right" }}>
               Description
