@@ -61,76 +61,74 @@ const ProjectMain = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ height: "100vh" }}>
-        <Card style={{ display: "flex", height: "100%" }}>
-          <Paper sx={{ bgcolor: theme.palette.secondary.dark }} elevation={3}>
-            <Box p={2}>
-              <div className=" s-current-month">
-                <h1>
-                  {currSMonthName()} {currSYear()}{" "}
-                </h1>
-                <i
-                  className="fa fa-angle-double-left"
-                  aria-hidden="true"
-                  onClick={() => setCalendar(prevSYear())}
-                ></i>
-                <i
-                  className="fas fa-angle-left s-prev"
-                  onClick={() => setCalendar(prevSMonth())}
-                ></i>
-                <i
-                  className="fas fa-angle-right s-next"
-                  onClick={() => setCalendar(nextSMonth())}
-                ></i>
-                <i
-                  className="fa fa-angle-double-right"
-                  aria-hidden="true"
-                  onClick={() => setCalendar(nextSYear())}
-                ></i>
+      <Card style={{ display: "flex", height: "100vh" }}>
+        <Box sx={{ bgcolor: theme.palette.secondary.dark }} elevation={3}>
+          <Box p={2}>
+            <div className=" s-current-month">
+              <h1>
+                {currSMonthName()} {currSYear()}{" "}
+              </h1>
+              <i
+                className="fa fa-angle-double-left"
+                aria-hidden="true"
+                onClick={() => setCalendar(prevSYear())}
+              ></i>
+              <i
+                className="fas fa-angle-left s-prev"
+                onClick={() => setCalendar(prevSMonth())}
+              ></i>
+              <i
+                className="fas fa-angle-right s-next"
+                onClick={() => setCalendar(nextSMonth())}
+              ></i>
+              <i
+                className="fa fa-angle-double-right"
+                aria-hidden="true"
+                onClick={() => setCalendar(nextSYear())}
+              ></i>
+            </div>
+            <div className="s-weekdays ">
+              <div>S</div>
+              <div>M</div>
+              <div>T</div>
+              <div>W</div>
+              <div>T</div>
+              <div>F</div>
+              <div>S</div>
+            </div>
+            {miniCalendar.map((week2) => (
+              <div key={week2} className="s-weeks">
+                {week2.map((day2) => (
+                  <div
+                    key={day2}
+                    className={
+                      selectedDate === day2.clone().format("YYYY-MM-DD")
+                        ? day2.year() === moment().year() &&
+                          day2.date() === moment().date() &&
+                          day2.month() === moment().month()
+                          ? "s-dates s-today s-selected-date"
+                          : "s-dates s-selected-date"
+                        : day2.year() === moment().year() &&
+                          day2.date() === moment().date() &&
+                          day2.month() === moment().month()
+                        ? "s-dates s-today"
+                        : "s-dates"
+                    }
+                    onClick={() => {
+                      showDate(day2.year(), day2.month(), day2.date());
+                    }}
+                  >
+                    <div>{day2.clone().format("D").toString()} </div>
+                  </div>
+                ))}
               </div>
-              <div className="s-weekdays ">
-                <div>S</div>
-                <div>M</div>
-                <div>T</div>
-                <div>W</div>
-                <div>T</div>
-                <div>F</div>
-                <div>S</div>
-              </div>
-              {miniCalendar.map((week2) => (
-                <div key={week2} className="s-weeks">
-                  {week2.map((day2) => (
-                    <div
-                      key={day2}
-                      className={
-                        selectedDate === day2.clone().format("YYYY-MM-DD")
-                          ? day2.year() === moment().year() &&
-                            day2.date() === moment().date() &&
-                            day2.month() === moment().month()
-                            ? "s-dates s-today s-selected-date"
-                            : "s-dates s-selected-date"
-                          : day2.year() === moment().year() &&
-                            day2.date() === moment().date() &&
-                            day2.month() === moment().month()
-                          ? "s-dates s-today"
-                          : "s-dates"
-                      }
-                      onClick={() => {
-                        showDate(day2.year(), day2.month(), day2.date());
-                      }}
-                    >
-                      <div>{day2.clone().format("D").toString()} </div>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </Box>
-          </Paper>
-          <CardContent>
-            <Projects projects={projects} setProjects={setProjects} />
-          </CardContent>
-        </Card>
-      </div>
+            ))}
+          </Box>
+        </Box>
+        <Box style={{ width: "100%", overflow: "auto" }}>
+          <Projects projects={projects} setProjects={setProjects} />
+        </Box>
+      </Card>
     </ThemeProvider>
   );
 };

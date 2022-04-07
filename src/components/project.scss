@@ -1,24 +1,19 @@
 * {
   user-select: none;
+
 }
-.project {
-  padding: 1.2rem;
-  margin: 0.6rem;
-}
-.project-title {
-  font-size: 16px;
-  font-weight: bold;
-}
+
+
 .project-container {
-  display: grid;
-  grid-template-rows: repeat(480,480);
-  justify-content: center;
+  display:block;
+  padding: 2rem;
+  font-size: 12px;
+  overflow:auto;
 }
 
 .projects-box {
- 
-  top: 16rem;
-  position:absolute;
+  margin-top: 2rem;
+  overflow:auto;
 }
 .new-project {
   margin-top: 4rem;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ThemeProvider } from "@mui/material/styles";
-import { Alert, Box, Button, IconButton, Snackbar } from "@mui/material";
+import { Alert, Box, Button, Card, IconButton, Snackbar } from "@mui/material";
 
 import Project from "./Project.js";
 import NewProject from "./NewProject.js";
@@ -79,14 +79,13 @@ const Projects = ({ projects, setProjects, selectedDate, onToggle }) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="project-container">
-        <div className="add-project" style={{ display: "flex" }}>
+      <Card className="project-container">
+        <Box style={{ display: "flex" }}>
           <Box mt={10} ml={1}>
             <Button
               variant="outlined"
@@ -107,73 +106,41 @@ const Projects = ({ projects, setProjects, selectedDate, onToggle }) => {
               }}
             />
           )}
-        </div>
-        <div
-          className="projects"
-          style={{ display: "flex", position: "absolute", top: 0, right: 0 }}
-        >
-          <Box
-            sx={{
-              display: open ? "" : "none",
-              margin: 8,
-              width: "100%",
-            }}
-          >
-            <Snackbar
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              sx={{ pt: 5 }}
-              open={open}
-              autoHideDuration={3500}
-              onClose={handleClose}
-            >
-              <Alert
-                severity={id.includes("NOT") ? "error" : "success"}
-                action={
-                  <IconButton
-                    aria-label="close"
-                    size="small"
-                    onClick={() => {
-                      setOpen(false);
-                    }}
-                  >
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                }
-                sx={{ mb: 2 }}
-                onClose={handleClose}
-              >
-                {id}
-              </Alert>
-            </Snackbar>
-          </Box>
-        </div>
+        </Box>
         <Box className="projects-box">
           <Box
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(6, 1fr)",
-              color: theme.palette.secondary.light,
+              color: theme.palette.primary.light,
+              padding: "4px 15px 0 0",
             }}
           >
-            <Box style={{ display: "inline-flex" }}>
+            <Box
+              style={{
+                display: "inline-flex",
+              }}
+            >
               <Box
                 style={{
                   display: "inline-flex",
                   height: "19px",
+                  alignItems: "center",
                   backgroundColor: theme.palette.primary.dark,
                   borderRadius: "4px 4px 0 0",
                   padding: "0 8px",
                   textTransform: "uppercase",
-                  alignItems: "center",
                 }}
               >
                 Name
               </Box>
             </Box>
-            <Box style={{ display: "flex", justifyContent: "right" }}>
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "right",
+              }}
+            >
               Description
             </Box>
             <Box style={{ display: "flex", justifyContent: "right" }}>
@@ -198,6 +165,48 @@ const Projects = ({ projects, setProjects, selectedDate, onToggle }) => {
               />
             );
           })}
+        </Box>
+      </Card>
+      <div
+        className="snack-bar"
+        style={{ display: "flex", position: "absolute", top: 0, right: 0 }}
+      >
+        <Box
+          sx={{
+            display: open ? "" : "none",
+            margin: 8,
+            width: "100%",
+          }}
+        >
+          <Snackbar
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            sx={{ pt: 5 }}
+            open={open}
+            autoHideDuration={3500}
+            onClose={handleClose}
+          >
+            <Alert
+              severity={id.includes("NOT") ? "error" : "success"}
+              action={
+                <IconButton
+                  aria-label="close"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+              sx={{ mb: 2 }}
+              onClose={handleClose}
+            >
+              {id}
+            </Alert>
+          </Snackbar>
         </Box>
       </div>
     </ThemeProvider>

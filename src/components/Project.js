@@ -37,20 +37,24 @@ const Project = (props) => {
   };
   return (
     <ThemeProvider theme={theme}>
-      <Paper
-        elevation={3}
+      <Box
         style={{
           backgroundColor: theme.palette.secondary.dark,
-          color: theme.palette.secondary.light,
           display: "block",
           position: "relative",
           borderBottom: "0.6px solid black",
           borderRadius: 0,
           padding: 15,
-          width: "100vh",
+          width: "100%",
+          boxShadow: "0 0 10px 0 rgb(0 0 0 / 15%)",
         }}
       >
-        <Box style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)" }}>
+        <Box
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(6, 1fr)",
+          }}
+        >
           <Box style={{ display: "flex", justifyContent: "left" }}>
             {!editing ? (
               <div onClick={() => setEditing(!editing)}>
@@ -89,7 +93,7 @@ const Project = (props) => {
         >
           <Icon />
         </IconButton>
-      </Paper>
+      </Box>
 
       <Popover
         id={id}
