@@ -1,25 +1,20 @@
 * {
   user-select: none;
-
 }
-
-
 .project-container {
   display:block;
-  padding: 2rem;
+  padding: 0 2rem;
   font-size: 12px;
-  overflow:auto;
 }
 
 .projects-box {
-  margin-top: 2rem;
-  overflow:auto;
+  margin-top: 5rem;
 }
 .new-project {
   margin-top: 4rem;
-  margin-left: 2rem;
   z-index: 1000;
 }
+
 .btn-add-project {
   border: none;
   cursor: pointer;

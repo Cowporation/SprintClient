@@ -7,37 +7,55 @@ import About from "./components/About.js";
 import Home from "./components/Home.js";
 import "./style.css";
 import { ThemeProvider } from "@mui/material/styles";
-import { AppBar } from "@mui/material";
+import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 
 import theme from "./theme";
 
 const App = () => {
+  const pages = ["Home", "Projects", "About"];
+
   return (
     <ThemeProvider theme={theme}>
-      <AppBar>
+      <AppBar color="secondary">
         <Router>
-          <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
-          />
-          <nav className="custom-element-bg">
-            <div className="logo">
-              <h4>Cowporation</h4>
-            </div>
-            <ul className="nav-links">
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/Projects">Projects</Link>
-              </li>
+          <Container>
+            <Toolbar style={{ height: "5rem" }}>
+              <Box
+                className="logo"
+                variant="h5"
+                noWrap
+                sx={{
+                  mr: 2,
+                  display: { xs: "none", md: "flex" },
+                }}
+              >
+                Cowporation
+              </Box>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: "flex",
+                }}
+              >
+                {pages.map((page) => (
+                  <Button key={page}>
+                    <Link
+                      style={{
+                        textDecoration: "none",
+                        color: "black",
+                        fontSize: "18",
+                      }}
+                      to={`/${page}`}
+                    >
+                      {page}
+                    </Link>
+                  </Button>
+                ))}
+              </Box>
+            </Toolbar>
+          </Container>
 
-              <li>
-                <Link to="/About">About</Link>
-              </li>
-            </ul>
-          </nav>
-          <Route path="/Projects" component={ProjectMain} />
+          <Route path="/Projects" render={(props) => <ProjectMain />} />
           <Route path="/About" component={About} />
           <Route path="/" exact component={Home} />
         </Router>

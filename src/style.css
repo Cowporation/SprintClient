@@ -4,24 +4,7 @@
   box-sizing: border-box;
   font-family: "PT Sans", sans-serif;
 }
-.custom-element-bg {
-  background-color: rgb(255, 221, 158);
-}
 
-body {
-  background: rgb(43, 43, 43);
-}
-
-nav {
-  position: fixed;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  min-height: 3rem;
-  box-shadow: 5px 10px 10px #000000;
-  z-index: 99;
-}
 .logo,
 .logo h4 {
   color: rgb(27, 27, 27);
@@ -29,16 +12,4 @@ nav {
   text-shadow: 0rem 0.1rem 0.1rem rgb(43, 43, 43);
   font-size: 20px;
 }
-.nav-links {
-  display: flex;
-  justify-content: space-around;
-  width: 40%;
-}
-.nav-links li,
-.nav-links a {
-  list-style: none;
-  text-decoration: none;
-  color: rgb(27, 27, 27);
-  text-shadow: 0rem 0rem 0.1rem rgb(43, 43, 43);
-  font-size: 18px;
-}
+

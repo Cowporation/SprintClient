@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useReducer,
-  useRef,
-  useCallback,
-} from "react";
+import React, { useState, useReducer } from "react";
 import moment from "moment";
 import { ThemeProvider } from "@mui/material/styles";
 import {
@@ -12,7 +6,6 @@ import {
   MenuItem,
   Box,
   Button,
-  IconButton,
   InputAdornment,
   Card,
   CardActions,
@@ -23,59 +16,11 @@ import { DataGrid } from "@mui/x-data-grid";
 import NewStory from "./NewStory.js";
 
 import AddIcon from "@mui/icons-material/Add";
+import TrashIcon from "@mui/icons-material/DeleteForever";
 import "./project.scss";
 import theme from "../theme";
 
-function useOnClickOutside(ref, handler) {
-  useEffect(() => {
-    const listener = (event) => {
-      if (
-        ref.current.contains(event.target) ||
-        (event.target.getAttribute("class") !== null &&
-          (event.target
-            .getAttribute("class")
-            .toString()
-            .includes("MuiSelect-select") ||
-            event.target
-              .getAttribute("class")
-              .toString()
-              .includes("MuiBackdrop-root") ||
-            event.target
-              .getAttribute("class")
-              .toString()
-              .includes("MuiMenuItem") ||
-            event.target
-              .getAttribute("class")
-              .toString()
-              .includes("MuiButton") ||
-            event.target
-              .getAttribute("class")
-              .toString()
-              .includes("MuiModal") ||
-            event.target.getAttribute("class").toString().includes("MuiList") ||
-            (event.target.getAttribute("d") !== null &&
-              event.target.getAttribute("d").toString().includes("M19")) ||
-            event.target
-              .getAttribute("class")
-              .toString()
-              .includes("MuiSvgIcon-root")))
-      ) {
-        return;
-      }
-      handler(event);
-    };
-    document.addEventListener("mousedown", listener);
-    document.addEventListener("touchstart", listener);
-    return () => {
-      document.removeEventListener("mousedown", listener);
-      document.removeEventListener("touchstart", listener);
-    };
-  }, [ref, handler]);
-}
 const NewProject = (props) => {
-  const divRef = useRef();
-  const handler = useCallback(() => props.onClickOutside(), [props]);
-  useOnClickOutside(divRef, handler);
   const initialState = {
     name: "",
     description: "",
@@ -207,9 +152,18 @@ const NewProject = (props) => {
       stories: state.stories,
     });
   };
+  const requiredEntry =
+    state.name === null ||
+    state.name === "" ||
+    state.description === null ||
+    state.description === "" ||
+    state.storyPointHours === 0 ||
+    state.storyPointHours === null ||
+    state.stories.length === 0;
+  const [deletable, setDeletable] = useState(false);
   return (
     <ThemeProvider theme={theme}>
-      <Card className="new-project" ref={divRef}>
+      <Card className="new-project">
         <CardContent
           component="form"
           style={{
@@ -217,22 +171,35 @@ const NewProject = (props) => {
           }}
         >
           <CardContent
-            style={{
-              display: "flex",
-            }}
             sx={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              justifySelf: "center",
+
               "& .MuiTextField-root": { mt: 1.5, mr: 1 },
             }}
           >
-            <Box sx={{ display: "block" }}>
+            <TextField
+              sx={{ width: "100%", fontColor: "red" }}
+              label="Project Name"
+              required={true}
+              error={state.name === null || state.name === ""}
+              defaultValue={""}
+              onChange={(e) => setState({ name: e.target.value })}
+            />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "15px",
+                paddingLeft: "5px",
+                paddingBottom: "5px",
+              }}
+            >
               <TextField
-                label="Project Name"
-                defaultValue={""}
-                onChange={(e) => setState({ name: e.target.value })}
-              />
-              <div id="task-error" style={{ color: "red" }}></div>
-
-              <TextField
+                required={true}
+                sx={{ width: "30%" }}
                 select
                 label="Month"
                 value={state.startMonth}
@@ -249,6 +216,8 @@ const NewProject = (props) => {
               </TextField>
 
               <TextField
+                required={true}
+                sx={{ width: "30%" }}
                 select
                 label="Day"
                 value={state.startDay}
@@ -264,6 +233,8 @@ const NewProject = (props) => {
                 ))}
               </TextField>
               <TextField
+                required={true}
+                sx={{ width: "30%" }}
                 label="Year"
                 select
                 value={state.startYear}
@@ -281,7 +252,9 @@ const NewProject = (props) => {
             </Box>
             <Box sx={{ display: "block" }}>
               <TextField
+                sx={{ width: "100%" }}
                 multiline
+                required={true}
                 rows={4}
                 label="Description"
                 defaultValue={""}
@@ -291,6 +264,7 @@ const NewProject = (props) => {
             <Box sx={{ display: "block" }}>
               <TextField
                 type="number"
+                required={true}
                 label="Hours / Story Point"
                 defaultValue="0"
                 sx={{ width: "25ch" }}
@@ -309,15 +283,18 @@ const NewProject = (props) => {
           <CardContent>
             <Box>
               <CardActions>
-                <IconButton
+                <Button
                   color="primary"
                   disableRipple
                   onClick={(el) => setAddStory(!addStory)}
+                  startIcon={
+                    <AddIcon
+                      className={addStory ? "add-button-rotated" : "add-button"}
+                    />
+                  }
                 >
-                  <AddIcon
-                    className={addStory ? "add-button-rotated" : "add-button"}
-                  />
-                </IconButton>
+                  Add Story
+                </Button>
               </CardActions>
               {addStory && (
                 <NewStory
@@ -326,18 +303,53 @@ const NewProject = (props) => {
                 ></NewStory>
               )}
             </Box>
+
             {state.stories.length !== 0 ? (
               <Box>
-                <div style={{ height: 300, width: "100%" }}>
-                  <DataGrid
-                    hideFooter={true}
-                    disableColumnMenu={true}
-                    rows={state.stories}
-                    columns={columns}
-                    getRowId={(r) => r.id}
-                    experimentalFeatures={{ newEditingApi: true }}
-                  />
-                </div>
+                <Box
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Button
+                    onClick={() => setDeletable(!deletable)}
+                    startIcon={<TrashIcon />}
+                  >
+                    {deletable ? "Cancel" : "Delete Story"}
+                  </Button>
+                  {deletable && (
+                    <Button disabled style={{ color: "salmon" }}>
+                      Click a Story to Delete!
+                    </Button>
+                  )}
+                </Box>
+                <Box>
+                  <div style={{ height: 300, width: "100%" }}>
+                    <DataGrid
+                      style={{
+                        color: deletable ? "rgb(255, 33, 70)" : "",
+                      }}
+                      hideFooter={true}
+                      rows={state.stories}
+                      columns={columns}
+                      getRowId={(r) => r.id}
+                      isRowSelectable={(param) => deletable}
+                      experimentalFeatures={{ newEditingApi: true }}
+                      onSelectionModelChange={(selectionModel) => {
+                        let rowsToDelete = [];
+                        selectionModel.forEach((rowId) => {
+                          rowsToDelete = state.stories.filter(
+                            (a) => a.id !== rowId
+                          );
+                          setTimeout(() => {
+                            setState({ stories: rowsToDelete });
+                          });
+                        });
+                      }}
+                    />
+                  </div>
+                </Box>
               </Box>
             ) : (
               ""
@@ -345,6 +357,7 @@ const NewProject = (props) => {
           </CardContent>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button
+              disabled={requiredEntry}
               size="large"
               variant="outlined"
               color="primary"

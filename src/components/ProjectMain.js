@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { ThemeProvider } from "@mui/material/styles";
-import { Box, Card, CardContent, Paper } from "@mui/material";
+import { Box, Card } from "@mui/material";
 
 import moment from "moment";
 import buildCalendar from "./buildCal";
 import "./projectmain.css";
 import theme from "../theme";
+import LeftArrow from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import LeftArrowM from "@mui/icons-material/KeyboardArrowLeft";
+import RightArrow from "@mui/icons-material/KeyboardDoubleArrowRight";
+import RightArrowM from "@mui/icons-material/KeyboardArrowRight";
 
 import Projects from "./Projects.js";
-
+const fetcher = require("./fetcher");
 const ProjectMain = () => {
   const [miniCalendar, setMiniCalendar] = useState([]);
   const [calendar, setCalendar] = useState(moment());
   const [projects, setProjects] = useState([]);
+
   useEffect(() => {
-    let resArr = [];
     const fetchProjects = async () => {
       try {
-        let res = await fetch("http://localhost:5000/project");
-        let json = await res.json();
+        let resArr = [];
+        let json = await fetcher.fetchProjects();
         resArr = json.projects;
         setProjects(resArr);
       } catch (error) {
@@ -59,47 +63,51 @@ const ProjectMain = () => {
     setMiniCalendar(buildCalendar(calendar));
   }, [calendar]);
 
+  const setUpdatedProjects = async (proj) => {
+    let json = await fetcher.fetchProjects();
+    setProjects(json.projects);
+  };
   return (
     <ThemeProvider theme={theme}>
-      <Card style={{ display: "flex", height: "100vh" }}>
+      <Card style={{ display: "flex", height: "100vh", zIndex: 99 }}>
         <Box sx={{ bgcolor: theme.palette.secondary.dark }} elevation={3}>
           <Box p={2}>
-            <div className=" s-current-month">
+            <Box className=" s-current-month">
               <h1>
                 {currSMonthName()} {currSYear()}{" "}
               </h1>
-              <i
+              <LeftArrow
                 className="fa fa-angle-double-left"
                 aria-hidden="true"
                 onClick={() => setCalendar(prevSYear())}
-              ></i>
-              <i
+              />
+              <LeftArrowM
                 className="fas fa-angle-left s-prev"
                 onClick={() => setCalendar(prevSMonth())}
-              ></i>
-              <i
+              />
+              <RightArrowM
                 className="fas fa-angle-right s-next"
                 onClick={() => setCalendar(nextSMonth())}
-              ></i>
-              <i
+              />
+              <RightArrow
                 className="fa fa-angle-double-right"
                 aria-hidden="true"
                 onClick={() => setCalendar(nextSYear())}
-              ></i>
-            </div>
-            <div className="s-weekdays ">
-              <div>S</div>
-              <div>M</div>
-              <div>T</div>
-              <div>W</div>
-              <div>T</div>
-              <div>F</div>
-              <div>S</div>
-            </div>
+              />
+            </Box>
+            <Box className="s-weekdays ">
+              <Box>S</Box>
+              <Box>M</Box>
+              <Box>T</Box>
+              <Box>W</Box>
+              <Box>T</Box>
+              <Box>F</Box>
+              <Box>S</Box>
+            </Box>
             {miniCalendar.map((week2) => (
-              <div key={week2} className="s-weeks">
+              <Box key={week2} className="s-weeks">
                 {week2.map((day2) => (
-                  <div
+                  <Box
                     key={day2}
                     className={
                       selectedDate === day2.clone().format("YYYY-MM-DD")
@@ -118,15 +126,19 @@ const ProjectMain = () => {
                       showDate(day2.year(), day2.month(), day2.date());
                     }}
                   >
-                    <div>{day2.clone().format("D").toString()} </div>
-                  </div>
+                    <Box>{day2.clone().format("D").toString()} </Box>
+                  </Box>
                 ))}
-              </div>
+              </Box>
             ))}
           </Box>
         </Box>
         <Box style={{ width: "100%", overflow: "auto" }}>
-          <Projects projects={projects} setProjects={setProjects} />
+          <Projects
+            updatedProjects={setUpdatedProjects}
+            projects={projects}
+            setProjects={setProjects}
+          />
         </Box>
       </Card>
     </ThemeProvider>

@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useReducer } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import {
   Box,
@@ -33,6 +33,13 @@ const NewStory = ({ newStory }) => {
     setState({ id: uuidv4() });
     newStory(state);
   };
+  const requiredEntry =
+    state.portion === null ||
+    state.portion === "" ||
+    state.priority === null ||
+    state.priority === "" ||
+    state.storyPoints === 0 ||
+    state.storyPoints === null;
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -44,11 +51,16 @@ const NewStory = ({ newStory }) => {
         <Box>
           <TextField
             multiline
+            required
             rows={4}
             label="Portion"
             value={state.portion}
             onChange={(e) =>
-              setState({ id: uuidv4(), portion: e.target.value })
+              setState({
+                id: uuidv4(),
+                portion: e.target.value,
+                delete: "TrashIcon",
+              })
             }
           />
         </Box>
@@ -60,6 +72,7 @@ const NewStory = ({ newStory }) => {
         >
           <Box>
             <TextField
+              required
               select
               style={{ width: 205 }}
               label="Priority"
@@ -82,6 +95,7 @@ const NewStory = ({ newStory }) => {
           </Box>
           <Box>
             <TextField
+              required
               style={{ width: 205 }}
               type="number"
               label="Story Points"
@@ -104,8 +118,13 @@ const NewStory = ({ newStory }) => {
               justifyContent: "right",
             }}
           >
-            <IconButton variant="outlined" size="small" onClick={handleStory}>
-              <CheckIcon style={{ color: "green" }} />
+            <IconButton
+              disabled={requiredEntry}
+              variant="outlined"
+              size="small"
+              onClick={handleStory}
+            >
+              <CheckIcon style={{ color: requiredEntry ? "grey" : "green" }} />
             </IconButton>
           </Box>
         </Box>
