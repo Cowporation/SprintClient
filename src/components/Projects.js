@@ -13,7 +13,6 @@ import Project from "./Project.js";
 import NewProject from "./NewProject.js";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
-import UpdateIcon from "@mui/icons-material/Edit";
 
 import theme from "../theme";
 import "./project.scss";
@@ -27,51 +26,35 @@ function uuidv4() {
     ).toString(16)
   );
 }
+
 const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
-  const [addProject, setAddProject] = useState(false);
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setAddProject(open);
-  };
-
   //add new project
   const newProject = async (project) => {
     let data;
     data = await fetcher.postProject(project);
     if (data && typeof data !== "string") {
       setProjects([...projects, data]);
-      setOpen(true);
-      setId(`Project ${data.name} ADDED!`);
+      setShowToast(true);
+      setToastMessage(`Project ${data.name} ADDED!`);
     } else {
-      setOpen(true);
-      setId(data);
+      setShowToast(true);
+      setToastMessage(data);
     }
   };
-
-  const [open, setOpen] = useState(false);
-  const [id, setId] = useState("");
-
+  //delete project
   const onDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5001/project/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      });
+      await fetcher.deleteProject(id);
       setProjects(projects.filter((a) => a._id !== id));
-      setOpen(true);
-      setId(`Project ${projects.filter((a) => a._id === id)[0].name} Deleted!`);
+      setShowToast(true);
+      setToastMessage(
+        `Project ${projects.filter((a) => a._id === id)[0].name} Deleted!`
+      );
     } catch (error) {
-      setId(`ERROR: Project ${id} NOT Deleted!`);
+      setToastMessage(`ERROR: Project ${id} NOT Deleted!`);
     }
   };
+  //update project
   const updateProject = async (e) => {
     try {
       let data = {
@@ -80,27 +63,28 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
         description: e.description,
         startDate: e.startDate,
       };
-      let response = await fetch("http://localhost:5001/project", {
-        method: "PUT",
-        headers: { "Content-type": "application/json; charset=UTF-8" },
-        body: JSON.stringify(data),
-      });
-      updatedProjects(await response.json());
+      let response = await fetcher.updateProject(data);
+      updatedProjects(response);
     } catch (error) {
-      setId(`ERROR: Project ${id} NOT Deleted!`);
+      setToastMessage(`ERROR: Project ${toastMessage} NOT Deleted!`);
     }
+  };
+
+  const [addProject, setAddProject] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const toggleDrawer = (open) => (event) => {
+    setAddProject(open);
   };
   const handleClose = (reason) => {
     if (reason === "clickaway") {
       return;
     }
-    setOpen(false);
+    setShowToast(false);
   };
 
-  const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState("");
-  const getEditMode = (id) => {
-    console.log(id);
+  const getEditId = (id) => {
     setEditId(id);
   };
   return (
@@ -122,24 +106,11 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
           >
             NEW PROJECT
           </Button>
-
-          <Button
-            sx={{
-              marginLeft: 2,
-              border: editMode ? "1px dashed salmon" : "",
-            }}
-            variant={editMode ? "text" : "outlined"}
-            onClick={() => setEditMode(!editMode)}
-            startIcon={<UpdateIcon variant="outlined" color="primary" />}
-          >
-            EDIT
-          </Button>
         </Box>
 
         <Box
           className="projects-box"
           style={{
-            border: editMode ? "1px dashed salmon" : "none",
             padding: 15,
           }}
         >
@@ -215,20 +186,15 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
 
           {projects.map((project) => {
             return (
-              <Box
-                key={uuidv4()}
-                style={{
-                  border: project._id === editId ? "1px solid salmon" : "",
-                }}
-              >
+              <Box key={uuidv4()}>
                 <Project
                   project={project}
                   selectedDate={selectedDate}
-                  editMode={editMode}
                   onDelete={onDelete}
                   updateProject={updateProject}
-                  projects={projects}
-                  editId={getEditMode}
+                  editId={getEditId}
+                  editingId={editId}
+                  setEditId={setEditId}
                 />
               </Box>
             );
@@ -250,7 +216,7 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
       >
         <Box
           sx={{
-            display: open ? "" : "none",
+            display: showToast ? "" : "none",
             margin: 8,
             width: "100%",
           }}
@@ -261,18 +227,18 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
               horizontal: "right",
             }}
             sx={{ pt: 5 }}
-            open={open}
+            open={showToast}
             autoHideDuration={3500}
             onClose={handleClose}
           >
             <Alert
-              severity={id.includes("ERROR") ? "error" : "success"}
+              severity={toastMessage.includes("ERROR") ? "error" : "success"}
               action={
                 <IconButton
                   aria-label="close"
                   size="small"
                   onClick={() => {
-                    setOpen(false);
+                    setShowToast(false);
                   }}
                 >
                   <CloseIcon fontSize="inherit" />
@@ -281,7 +247,7 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
               sx={{ mb: 2 }}
               onClose={handleClose}
             >
-              {id}
+              {toastMessage}
             </Alert>
           </Snackbar>
         </Box>
