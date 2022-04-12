@@ -1,36 +1,25 @@
 import React, { useState, useEffect } from "react";
+//other frameworks
+import moment from "moment";
+//material ui
 import { ThemeProvider } from "@mui/material/styles";
 import { Box, Card } from "@mui/material";
-
-import moment from "moment";
-import buildCalendar from "./buildCal";
-import "./projectmain.css";
-import theme from "../theme";
+//icons
 import LeftArrow from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import LeftArrowM from "@mui/icons-material/KeyboardArrowLeft";
 import RightArrow from "@mui/icons-material/KeyboardDoubleArrowRight";
 import RightArrowM from "@mui/icons-material/KeyboardArrowRight";
-
+//helpers
+import buildCalendar from "./buildCal";
+//components
 import Projects from "./Projects.js";
-const fetcher = require("./fetcher");
+//theme/css
+import theme from "../theme";
+import "./projectmain.css";
+
 const ProjectMain = () => {
   const [miniCalendar, setMiniCalendar] = useState([]);
   const [calendar, setCalendar] = useState(moment());
-  const [projects, setProjects] = useState([]);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        let resArr = [];
-        let json = await fetcher.fetchProjects();
-        resArr = json.projects;
-        setProjects(resArr);
-      } catch (error) {
-        console.log(`Problem loading projects - ${error.message}`);
-      }
-    };
-    fetchProjects();
-  }, []);
 
   // Calendar Set-up
   const [selectedDate, setSelectedDate] = useState(
@@ -63,37 +52,38 @@ const ProjectMain = () => {
     setMiniCalendar(buildCalendar(calendar));
   }, [calendar]);
 
-  const setUpdatedProjects = async (proj) => {
-    let json = await fetcher.fetchProjects();
-    setProjects(json.projects);
-  };
   return (
     <ThemeProvider theme={theme}>
       <Card style={{ display: "flex", height: "100vh", zIndex: 99 }}>
-        <Box sx={{ bgcolor: theme.palette.secondary.dark }} elevation={3}>
+        <Box
+          sx={{ width: "350px", bgcolor: theme.palette.secondary.dark }}
+          elevation={3}
+        >
           <Box p={2}>
             <Box className=" s-current-month">
-              <h1>
+              <h3>
                 {currSMonthName()} {currSYear()}{" "}
-              </h1>
-              <LeftArrow
-                className="fa fa-angle-double-left"
-                aria-hidden="true"
-                onClick={() => setCalendar(prevSYear())}
-              />
-              <LeftArrowM
-                className="fas fa-angle-left s-prev"
-                onClick={() => setCalendar(prevSMonth())}
-              />
-              <RightArrowM
-                className="fas fa-angle-right s-next"
-                onClick={() => setCalendar(nextSMonth())}
-              />
-              <RightArrow
-                className="fa fa-angle-double-right"
-                aria-hidden="true"
-                onClick={() => setCalendar(nextSYear())}
-              />
+              </h3>
+              <Box>
+                <LeftArrow
+                  className="fa fa-angle-double-left"
+                  aria-hidden="true"
+                  onClick={() => setCalendar(prevSYear())}
+                />
+                <LeftArrowM
+                  className="fas fa-angle-left s-prev"
+                  onClick={() => setCalendar(prevSMonth())}
+                />
+                <RightArrowM
+                  className="fas fa-angle-right s-next"
+                  onClick={() => setCalendar(nextSMonth())}
+                />
+                <RightArrow
+                  className="fa fa-angle-double-right"
+                  aria-hidden="true"
+                  onClick={() => setCalendar(nextSYear())}
+                />
+              </Box>
             </Box>
             <Box className="s-weekdays ">
               <Box>S</Box>
@@ -134,11 +124,7 @@ const ProjectMain = () => {
           </Box>
         </Box>
         <Box style={{ width: "100%", overflow: "auto" }}>
-          <Projects
-            updatedProjects={setUpdatedProjects}
-            projects={projects}
-            setProjects={setProjects}
-          />
+          <Projects />
         </Box>
       </Card>
     </ThemeProvider>

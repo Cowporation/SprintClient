@@ -1,24 +1,21 @@
 
 
 .s-current-month {
-  display: grid;
+  display: flex;
+  justify-content: space-between;
   margin-top: 4rem;
-  padding: 25px;
+  padding: 20px;
   font-size: 16px;
   border-top: solid;
   border-right: 0.5px solid;
   border-left: 0.5px solid;
-  grid-template-columns: 200px 40px 40px 40px 40px;
   align-items: center;
   text-transform: uppercase;
 }
 .date-select {
   max-width: 455px;
 }
-i:hover {
-  cursor: pointer;
-  color: salmon;
-}
+
 .s-weeks {
   border-right: 0.5px solid;
   border-left: 0.5px solid;
@@ -37,8 +34,8 @@ i:hover {
   font-size: 15px;
 }
 .s-dates {
-  height: 5em;
-  width: 5em;
+  height: 3.5em;
+  width: 3.5em;
   user-select: none;
   font-size: 13px;
   display: flex;

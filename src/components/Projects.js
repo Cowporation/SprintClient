@@ -1,19 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+//material ui
 import { ThemeProvider } from "@mui/material/styles";
 import {
   Alert,
+  Backdrop,
   Box,
   Button,
+  Card,
   Drawer,
   IconButton,
+  Paper,
   Snackbar,
 } from "@mui/material";
-
-import Project from "./Project.js";
-import NewProject from "./NewProject.js";
+//icons
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
-
+import CircularProgress from "@mui/material/CircularProgress";
+//components
+import Project from "./Project.js";
+import NewProject from "./NewProject.js";
+//theme/css
 import theme from "../theme";
 import "./project.scss";
 const fetcher = require("./fetcher");
@@ -27,7 +33,45 @@ function uuidv4() {
   );
 }
 
-const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
+const Projects = ({ selectedDate }) => {
+  const [projects, setProjects] = useState([]);
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        let resArr = [];
+        let json = await fetcher.fetchProjects();
+        resArr = json.projects;
+        setProjects(resArr);
+      } catch (error) {
+        console.log(`Problem loading projects - ${error.message}`);
+      }
+    };
+    const fetchTasks = async () => {
+      try {
+        let resArr = [];
+        let json = await fetcher.fetchTasks();
+        resArr = json.stories;
+        setTasks(resArr);
+      } catch (error) {
+        console.log(`Problem loading tasks - ${error.message}`);
+      }
+    };
+    const fetchSprints = async () => {
+      try {
+        let resArr = [];
+        let json = await fetcher.fetchSprints();
+        resArr = json.sprints;
+        console.log(resArr);
+      } catch (error) {
+        console.log(`Problem loading sprints - ${error.message}`);
+      }
+    };
+    fetchProjects();
+    fetchTasks();
+    fetchSprints();
+  }, [setProjects]);
   //add new project
   const newProject = async (project) => {
     let data;
@@ -63,8 +107,9 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
         description: e.description,
         startDate: e.startDate,
       };
-      let response = await fetcher.updateProject(data);
-      updatedProjects(response);
+      await fetcher.updateProject(data);
+      let json = await fetcher.fetchProjects();
+      setProjects(json.projects);
     } catch (error) {
       setToastMessage(`ERROR: Project ${toastMessage} NOT Deleted!`);
     }
@@ -87,8 +132,15 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
   const getEditId = (id) => {
     setEditId(id);
   };
+
   return (
     <ThemeProvider theme={theme}>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={projects.length === 0}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Box className="project-container">
         <Box
           style={{
@@ -107,100 +159,115 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
             NEW PROJECT
           </Button>
         </Box>
-
-        <Box
-          className="projects-box"
-          style={{
-            padding: 15,
-          }}
-        >
-          <Box
+        {projects.length !== 0 && (
+          <Card
+            sx={{ boxShadow: "1px 2px 5px 7px #2b2b2b" }}
+            className="projects-box"
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(6, 1fr)",
-              color: theme.palette.primary.light,
-              padding: "4px 15px 0 0",
-              margin: 0,
-              minWidth: "860px",
+              padding: 15,
             }}
           >
-            <Box
-              style={{
-                display: "inline-flex",
-              }}
-            >
+            <Box>
               <Box
                 style={{
-                  display: "inline-flex",
-                  height: "19px",
-                  alignItems: "center",
-                  backgroundColor: theme.palette.primary.dark,
-                  borderRadius: "4px 4px 0 0",
-                  padding: "0 8px",
-                  textTransform: "uppercase",
-                  marginRight: "115px",
+                  display: "grid",
+                  gridTemplateColumns: "repeat(6, 1fr)",
+                  color: theme.palette.primary.light,
+                  padding: "4px 15px 0 0",
+                  margin: 0,
+                  minWidth: "860px",
                 }}
               >
-                Name
+                <Box
+                  style={{
+                    display: "inline-flex",
+                  }}
+                >
+                  <Box
+                    style={{
+                      display: "inline-flex",
+                      height: "19px",
+                      alignItems: "center",
+                      backgroundColor: theme.palette.primary.dark,
+                      borderRadius: "4px 4px 0 0",
+                      padding: "0 8px",
+                      textTransform: "uppercase",
+                      marginRight: "115px",
+                    }}
+                  >
+                    Name
+                  </Box>
+                </Box>
+                <Box
+                  style={{
+                    display: "flex",
+                    justifyContent: "right",
+                    width: "150px",
+                  }}
+                >
+                  Description
+                </Box>
+                <Box
+                  style={{
+                    display: "flex",
+                    justifyContent: "right",
+                    whiteSpace: "nowrap",
+                    width: "200px",
+                    paddingRight: "10px",
+                  }}
+                >
+                  Start Date
+                </Box>
+                <Box
+                  style={{
+                    display: "flex",
+                    justifyContent: "right",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Total Points (Pts)
+                </Box>
+                <Box
+                  style={{
+                    display: "flex",
+                    justifyContent: "right",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Total Cost ($)
+                </Box>
               </Box>
-            </Box>
-            <Box
-              style={{
-                display: "flex",
-                justifyContent: "right",
-                width: "150px",
-              }}
-            >
-              Description
-            </Box>
-            <Box
-              style={{
-                display: "flex",
-                justifyContent: "right",
-                whiteSpace: "nowrap",
-                width: "200px",
-                paddingRight: "10px",
-              }}
-            >
-              Start Date
-            </Box>
-            <Box
-              style={{
-                display: "flex",
-                justifyContent: "right",
-                whiteSpace: "nowrap",
-              }}
-            >
-              Total Points (Pts)
-            </Box>
-            <Box
-              style={{
-                display: "flex",
-                justifyContent: "right",
-                whiteSpace: "nowrap",
-              }}
-            >
-              Total Cost ($)
-            </Box>
-          </Box>
 
-          {projects.map((project) => {
-            return (
-              <Box key={uuidv4()}>
-                <Project
-                  project={project}
-                  selectedDate={selectedDate}
-                  onDelete={onDelete}
-                  updateProject={updateProject}
-                  editId={getEditId}
-                  editingId={editId}
-                  setEditId={setEditId}
-                />
-              </Box>
-            );
-          })}
-        </Box>
+              {projects.map((project) => {
+                return (
+                  <Box key={uuidv4()}>
+                    <Project
+                      project={project}
+                      selectedDate={selectedDate}
+                      onDelete={onDelete}
+                      updateProject={updateProject}
+                      editId={getEditId}
+                      editingId={editId}
+                      setEditId={setEditId}
+                    />
+                  </Box>
+                );
+              })}
+            </Box>
+          </Card>
+        )}
       </Box>
+      <Paper
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(5, 1fr)",
+          gap: "25px",
+        }}
+      >
+        {tasks.map((task) => (
+          <Box key={task._id}>{task.portion}</Box>
+        ))}
+      </Paper>
       <Drawer anchor={"right"} open={addProject} onClose={toggleDrawer(false)}>
         <Box sx={{ width: 540 }} role="presentation">
           <NewProject

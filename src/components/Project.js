@@ -5,13 +5,13 @@ import {
   ClickAwayListener,
   Divider,
   IconButton,
-  MenuList,
-  MenuItem,
+  Input,
+  InputAdornment,
   ListItemIcon,
   ListItemText,
+  MenuList,
+  MenuItem,
   Popover,
-  InputAdornment,
-  Input,
   TextField,
 } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterMoment";
@@ -19,7 +19,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import Icon from "@mui/icons-material/MoreHorizSharp";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import EditIcon from "@mui/icons-material/Update";
+import EditIcon from "@mui/icons-material/Edit";
 import EnterIcon from "@mui/icons-material/KeyboardReturn";
 
 import theme from "../theme";
@@ -293,6 +293,19 @@ const Project = (props) => {
             </Box>
           </Box>
         </ClickAwayListener>
+        {props.editingId === props.project._id ? (
+          <IconButton
+            color="primary"
+            disableRipple
+            style={{ position: "absolute", top: 2, right: 50 }}
+            ria-describedby={id}
+            variant="contained"
+          >
+            <EditIcon />
+          </IconButton>
+        ) : (
+          ""
+        )}
         <IconButton
           color="primary"
           disableRipple
@@ -324,7 +337,7 @@ const Project = (props) => {
             <ListItemIcon>
               <EditIcon color="primary" fontSize="small" />
             </ListItemIcon>
-            <ListItemText>Update</ListItemText>
+            <ListItemText>Edit</ListItemText>
           </MenuItem>
           <Divider />
           <MenuItem

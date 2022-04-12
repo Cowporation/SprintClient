@@ -1,24 +1,26 @@
 import React, { useState, useReducer } from "react";
 import moment from "moment";
+
 import { ThemeProvider } from "@mui/material/styles";
 import {
-  TextField,
-  MenuItem,
   Box,
   Button,
-  InputAdornment,
   Card,
   CardActions,
   CardContent,
+  InputAdornment,
+  MenuItem,
+  TextField,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
-import NewStory from "./NewStory.js";
-
 import AddIcon from "@mui/icons-material/Add";
 import TrashIcon from "@mui/icons-material/DeleteForever";
-import "./project.scss";
+
+import NewStory from "./NewStory.js";
+
 import theme from "../theme";
+import "./project.scss";
 
 const NewProject = (props) => {
   const initialState = {

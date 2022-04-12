@@ -48,3 +48,19 @@ export const fetchTasks = async () =>
     } else if (response.status === 404) return "ERROR";
     else return null;
   });
+//Subtask fetches
+export const fetchSubtasks = async () =>
+  fetch("http://localhost:5001/subtask").then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else if (response.status === 404) return "ERROR";
+    else return null;
+  });
+//Sprint fetches
+export const fetchSprints = async () =>
+  fetch("http://localhost:5001/sprint").then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else if (response.status === 404) return "ERROR";
+    else return null;
+  });
