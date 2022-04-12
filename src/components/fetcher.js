@@ -1,5 +1,5 @@
 export const postProject = async (project) =>
-  fetch("http://localhost:5000/project", {
+  fetch("http://localhost:5001/project", {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -12,7 +12,7 @@ export const postProject = async (project) =>
     else return null;
   });
 export const fetchProjects = () =>
-  fetch("http://localhost:5000/project").then((response) => {
+  fetch("http://localhost:5001/project").then((response) => {
     if (response.ok) {
       return response.json();
     } else if (response.status === 404) return "ERROR";

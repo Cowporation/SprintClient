@@ -152,7 +152,7 @@ const Project = (props) => {
                   width: "150px",
                   borderBottom: props.editMode ? "1px dashed salmon" : "none",
                 }}
-                onClick={() => setEditing(!editing)}
+                onClick={() => props.editId(props.project._id)}
                 onMouseDown={() => handleNameMouseDown()}
               >
                 {props.project.name}

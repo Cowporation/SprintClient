@@ -59,7 +59,7 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
 
   const onDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/project/${id}`, {
+      await fetch(`http://localhost:5001/project/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -80,7 +80,7 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
         description: e.description,
         startDate: e.startDate,
       };
-      let response = await fetch("http://localhost:5000/project", {
+      let response = await fetch("http://localhost:5001/project", {
         method: "PUT",
         headers: { "Content-type": "application/json; charset=UTF-8" },
         body: JSON.stringify(data),
@@ -98,7 +98,11 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
   };
 
   const [editMode, setEditMode] = useState(false);
-
+  const [editId, setEditId] = useState("");
+  const getEditMode = (id) => {
+    console.log(id);
+    setEditId(id);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Box className="project-container">
@@ -211,7 +215,12 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
 
           {projects.map((project) => {
             return (
-              <Box key={uuidv4()}>
+              <Box
+                key={uuidv4()}
+                style={{
+                  border: project._id === editId ? "1px solid salmon" : "",
+                }}
+              >
                 <Project
                   project={project}
                   selectedDate={selectedDate}
@@ -219,6 +228,7 @@ const Projects = ({ updatedProjects, projects, setProjects, selectedDate }) => {
                   onDelete={onDelete}
                   updateProject={updateProject}
                   projects={projects}
+                  editId={getEditMode}
                 />
               </Box>
             );
