@@ -74,15 +74,15 @@ const ProjectMain = () => {
         style={{
           backgroundColor: theme.palette.background.paper,
           display: "flex",
-          minHeight: "2160px",
-          minWidth: "1234px",
+          minHeight: "100vh",
+          overflowY: "hidden",
         }}
       >
         <Box
           style={{
             display: view === "dash" ? "block" : "flex",
             height: "100vh",
-            position: view === "dash" ? "fixed" : "",
+            position: view === "dash" ? "fixed" : "fixed",
             left: 0,
             color: theme.palette.secondary.light,
             backgroundColor:
