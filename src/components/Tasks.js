@@ -171,7 +171,7 @@ const Tasks = (props) => {
               >
                 <CardHeader
                   titleTypographyProps={{
-                    color: theme.palette.secondary.main,
+                    color: theme.palette.primary.main,
                     variant: "h5",
                   }}
                   avatar={
@@ -227,7 +227,11 @@ const Tasks = (props) => {
                   justifyContent: "space-between",
                 }}
               >
-                <Typography variant="subtitle1" color="primary" component="div">
+                <Typography
+                  variant="subtitle1"
+                  color="secondary"
+                  component="div"
+                >
                   Percentage of Initial Velocity
                   <Box style={{ display: "flex", margin: 15 }}>
                     <CircularProgress
@@ -254,7 +258,7 @@ const Tasks = (props) => {
                           style={{ backgroundColor: "green", margin: 5 }}
                         />
                         <Typography variant="caption" color="secondary">
-                          At initial velocity
+                          {">= initial velocity "}
                         </Typography>
                       </Box>
                       <Box style={{ display: "flex" }}>
@@ -264,7 +268,7 @@ const Tasks = (props) => {
                           style={{ backgroundColor: "#ff4242", margin: 5 }}
                         />
                         <Typography variant="caption" color="secondary">
-                          Under initial velocity
+                          {"< initial velocity"}
                         </Typography>
                       </Box>
                     </Box>

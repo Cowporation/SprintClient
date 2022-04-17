@@ -227,6 +227,7 @@ const Projects = ({ projectId, selectedDate, view, getProject }) => {
                 justifySelf: "center",
                 height: view === "dash" ? "480px" : "768px",
                 marginBottom: "110rem",
+                marginRight: projects.length >= 14 ? "" : "-7px",
               }}
             >
               {projects.map((project) => {
@@ -237,7 +238,9 @@ const Projects = ({ projectId, selectedDate, view, getProject }) => {
                     style={{
                       cursor: view === "dash" && "pointer",
                       color:
-                        viewId === project._id && theme.palette.secondary.main,
+                        viewId === project._id && view === "dash"
+                          ? theme.palette.secondary.main
+                          : theme.palette.secondary.light,
 
                       border: view === "dash" && `1px solid rgba(0,0,0,0.4)`,
                     }}
