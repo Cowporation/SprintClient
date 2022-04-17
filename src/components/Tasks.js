@@ -296,7 +296,15 @@ const Tasks = (props) => {
                 </Card>
               </Card>
             </Box>
-            <Card style={{ marginTop: "25px", height: "450px", width: "100%" }}>
+            <Card
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "25px",
+                height: "450px",
+                width: "100%",
+              }}
+            >
               <Box
                 style={{
                   width: "768px",
@@ -340,39 +348,52 @@ const Tasks = (props) => {
                     <Box># Sprint(s) to Completion</Box>
                   </Box>
                 </Box>
-                {tasks.length !== 0 &&
-                  tasks.map((task) => {
-                    return (
-                      task.projectID === props.project._id && (
-                        <Box
-                          key={task._id}
-                          style={{
-                            display: "grid",
-                            height: "100%",
-
-                            gridTemplateColumns: "repeat(2, 1fr)",
-                            minWidth: "860px",
-                            backgroundColor: theme.palette.secondary.dark,
-                            boxShadow: " 0px -0.6px 6px rgba(0,0,0,0.3)",
-                            border:
-                              "0.5px 0.5px 0px 0.5px solid rgba(0,0,0,0.3)",
-                            borderRadius: 0,
-                            padding: "12px",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Box
-                            style={{
-                              width: "100px",
-                            }}
-                          >
-                            {task.portion}
-                          </Box>
-                          <Box>{getPercentageCompletion(task.subtasks)}</Box>
-                        </Box>
-                      )
-                    );
-                  })}
+                <Box
+                  className="project-list"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifySelf: "center",
+                    height: "400px",
+                    marginBottom: "110rem",
+                    marginRight: tasks.length >= 10 && "7px",
+                  }}
+                >
+                  {tasks.length !== 0
+                    ? tasks.map((task) => {
+                        return (
+                          task.projectID === props.project._id && (
+                            <Box
+                              key={task._id}
+                              style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(2, 1fr)",
+                                minWidth: "860px",
+                                backgroundColor: theme.palette.secondary.dark,
+                                boxShadow: " 0px -0.6px 6px rgba(0,0,0,0.3)",
+                                border:
+                                  "0.5px 0.5px 0px 0.5px solid rgba(0,0,0,0.3)",
+                                borderRadius: 0,
+                                padding: "12px",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Box
+                                style={{
+                                  width: "100px",
+                                }}
+                              >
+                                {task.portion}
+                              </Box>
+                              <Box>
+                                {getPercentageCompletion(task.subtasks)}
+                              </Box>
+                            </Box>
+                          )
+                        );
+                      })
+                    : "No Tasks"}
+                </Box>
               </Box>
             </Card>
           </Box>

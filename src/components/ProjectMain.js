@@ -101,14 +101,20 @@ const ProjectMain = () => {
             <Box
               style={{
                 display: "flex",
-                justifyContent: "center",
+                justifyContent: "space-between",
                 marginTop: "5.25rem",
               }}
             >
-              <Button variant="outlined" onClick={() => setView("project")}>
+              <Button
+                variant={view !== "dash" ? "outlined" : "text"}
+                onClick={() => setView("project")}
+              >
                 Projects
               </Button>
-              <Button variant="outlined" onClick={() => changeView()}>
+              <Button
+                variant={view !== "dash" ? "text" : "outlined"}
+                onClick={() => changeView()}
+              >
                 Dashboard
               </Button>
             </Box>

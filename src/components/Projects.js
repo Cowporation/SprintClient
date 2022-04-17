@@ -256,7 +256,7 @@ const Projects = ({ projectId, selectedDate, view, getProject }) => {
         )}
       </Box>
       <Drawer anchor={"right"} open={addProject} onClose={toggleDrawer(false)}>
-        <Box sx={{ width: 540 }} role="presentation">
+        <Box sx={{ width: 540 }}>
           <NewProject
             projects={projects}
             selectedDate={selectedDate}
