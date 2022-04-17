@@ -74,7 +74,7 @@ const ProjectMain = () => {
         style={{
           backgroundColor: theme.palette.background.paper,
           display: "flex",
-          minHeight: "100vh",
+          minHeight: "2160px",
           minWidth: "1234px",
         }}
       >
