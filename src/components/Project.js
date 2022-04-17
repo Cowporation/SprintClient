@@ -181,6 +181,7 @@ const Project = (props) => {
                 <Box
                   style={{
                     width: 100,
+                    marginLeft: -15,
                   }}
                   onClick={() => setEditing(true)}
                   onMouseDown={() => handleNameMouseDown()}
@@ -202,6 +203,7 @@ const Project = (props) => {
                     defaultValue={props.project.description}
                     style={{
                       fontSize: "12px",
+                      marginLeft: -25,
                     }}
                     endAdornment={
                       <InputAdornment position="end">
@@ -224,6 +226,7 @@ const Project = (props) => {
                 <Box
                   style={{
                     marginLeft: -25,
+                    minHeight: "30px",
                     width: 100,
                   }}
                   onClick={() => setEditingDesc(true)}

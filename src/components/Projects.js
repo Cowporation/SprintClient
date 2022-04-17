@@ -113,7 +113,6 @@ const Projects = ({ projectId, selectedDate, view, getProject }) => {
     projectId(id);
     getProject(projects.filter((p) => p._id === id)[0]);
   };
-
   return (
     <ThemeProvider theme={theme}>
       <Backdrop
@@ -219,6 +218,7 @@ const Projects = ({ projectId, selectedDate, view, getProject }) => {
                 Total Cost ($)
               </Box>
             </Box>
+
             <Box
               className="project-list"
               style={{
@@ -231,7 +231,13 @@ const Projects = ({ projectId, selectedDate, view, getProject }) => {
             >
               {projects.map((project) => {
                 return (
-                  <Box key={uuidv4()} onClick={() => getStory(project._id)}>
+                  <Box
+                    key={uuidv4()}
+                    onClick={() => view === "dash" && getStory(project._id)}
+                    style={{
+                      cursor: view === "dash" && "pointer",
+                    }}
+                  >
                     <Project
                       view={view}
                       project={project}
