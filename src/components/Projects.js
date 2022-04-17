@@ -124,9 +124,9 @@ const Projects = ({ projectId, selectedDate, view, getProject }) => {
 
       <Box
         style={{
-          position: "fixed",
-          top: view === "dash" ? "6rem" : "4rem",
-          right: view === "dash" ? "2rem" : 0,
+          position: "absolute",
+          top: view === "dash" ? "40rem" : "4rem",
+          right: view === "dash" ? "1rem" : 0,
           padding: view === "dash" ? "0" : "2.2rem",
         }}
       >
@@ -143,7 +143,7 @@ const Projects = ({ projectId, selectedDate, view, getProject }) => {
         style={{
           width: "100%",
           fontSize: "14px",
-          marginTop: view === "dash" ? "2rem" : "12rem",
+          marginTop: view === "dash" ? "8rem" : "12rem",
           padding: view === "dash" ? "0 1rem" : "0 2rem",
           marginRight: "calc((100vw - 100%))",
         }}
