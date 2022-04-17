@@ -284,7 +284,7 @@ const UserComponent = () => {
   return (
     <ThemeProvider theme={theme}>
       <Card
-        style={{ paddingTop: "5%", minHeight: "100vh", overflowY: "hidden" }}
+        style={{ paddingTop: "5%"}}
       >
         <CardHeader
           title="User Management"
