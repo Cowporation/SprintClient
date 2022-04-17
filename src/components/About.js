@@ -1,14 +1,15 @@
 import { ThemeProvider } from "@mui/material/styles";
-import { Box, Paper } from "@mui/material";
+import { Box, Card } from "@mui/material";
 import theme from "../theme";
 
 export const About = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Paper
+      <Card
         style={{
           display: "flex",
           justifyContent: "center",
+          height: "100vh",
           padding: 25,
         }}
       >
@@ -17,15 +18,16 @@ export const About = () => {
           style={{
             display: "flex",
             justifyContent: "center",
-            width: "100%",
-            border: "solid",
+            border: "1px solid",
             marginTop: "8rem",
             padding: 25,
+            alignItems: "center",
+            height: "50px",
           }}
         >
           <h4>Cowporation Sprint App - Version 1.0.0</h4>
         </Box>
-      </Paper>
+      </Card>
     </ThemeProvider>
   );
 };

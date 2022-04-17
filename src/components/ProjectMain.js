@@ -185,6 +185,7 @@ const ProjectMain = () => {
               view={view}
               projectId={setViewId}
               getProject={getProject}
+              selectedDate={selectedDate}
             />
           </Box>
         </Box>

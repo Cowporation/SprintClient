@@ -4,7 +4,6 @@
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
-
 .logo,
 .logo h4 {
   color: rgb(27, 27, 27);
@@ -19,7 +18,7 @@
 }
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #2b2b2b; 
+  background: #323232; 
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {

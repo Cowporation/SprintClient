@@ -204,7 +204,11 @@ const NewProject = (props) => {
                 sx={{ width: "30%" }}
                 select
                 label="Month"
-                value={state.startMonth}
+                value={
+                  props.selectedDate
+                    ? moment(props.selectedDate).format("MM")
+                    : state.startMonth
+                }
                 onChange={(e) => setState({ startMonth: e.target.value })}
               >
                 <MenuItem disabled={true} value="">
@@ -222,7 +226,11 @@ const NewProject = (props) => {
                 sx={{ width: "30%" }}
                 select
                 label="Day"
-                value={state.startDay}
+                value={
+                  props.selectedDate
+                    ? moment(props.selectedDate).format("DD")
+                    : state.startDay
+                }
                 onChange={(e) => setState({ startDay: e.target.value })}
               >
                 <MenuItem value="" disabled={true}>
@@ -239,7 +247,11 @@ const NewProject = (props) => {
                 sx={{ width: "30%" }}
                 label="Year"
                 select
-                value={state.startYear}
+                value={
+                  props.selectedDate
+                    ? moment(props.selectedDate).format("YYYY")
+                    : state.startYear
+                }
                 onChange={(e) => setState({ startYear: e.target.value })}
               >
                 <MenuItem value="" disabled={true}>

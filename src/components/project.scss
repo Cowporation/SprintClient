@@ -12,10 +12,10 @@
 }
 .project-list {
   overflow:hidden;
-  margin-right:2px;
 }
 .project-list:hover {
   overflow-y:auto;
+  margin-right: -7px;
 }
 @keyframes rotate-keyframes {
   from {

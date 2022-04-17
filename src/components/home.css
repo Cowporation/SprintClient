@@ -3,16 +3,4 @@
     padding: 0;
     box-sizing: border-box;
 }
-.welcome-home {
-    display:flex;
-    position: relative;
-}
-.welcome-home h2 {
-    position: absolute;
-    user-select: none;
-    display: inline-flex;
-    margin: 2.4rem 0;
-    padding: 2.4rem 1rem;
-    color:white;
-    animation:cubic-bezier(1, 0, 0, 1);
-}
+

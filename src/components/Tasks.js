@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 //icons
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import CircularLoading from "@mui/material/CircularProgress";
 //components
 import CircularProgress from "./CircularProgress.js";
 //theme/css
@@ -91,16 +92,23 @@ const Tasks = (props) => {
           alignItems: "center",
         }}
       >
-        <Box>
-          <Typography variant="caption">
-            {parseInt((actHours / (reestHours + actHours)) * 100, 10)}%
-          </Typography>
-          <CircularProgress
-            size={30}
-            strokeWidth={2}
-            color={"green"}
-            percent={parseInt((actHours / (reestHours + actHours)) * 100, 10)}
-          ></CircularProgress>
+        <Box
+          style={{
+            display: "block",
+          }}
+        >
+          <Box
+            style={{
+              margin: "auto",
+            }}
+          >
+            <CircularProgress
+              size={60}
+              strokeWidth={2}
+              color={"green"}
+              percent={parseInt((actHours / (reestHours + actHours)) * 100, 10)}
+            ></CircularProgress>
+          </Box>
         </Box>
         <Box>
           <Typography variant="subtitle1">
@@ -131,8 +139,14 @@ const Tasks = (props) => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={tasks.length === 0}
+      >
+        <CircularLoading color="inherit" />
+      </Backdrop>
       <Box>
-        {props.project && (
+        {props.project ? (
           <Box>
             <Box
               style={{
@@ -318,6 +332,7 @@ const Tasks = (props) => {
                       alignItems: "center",
                       textAlign: "center",
                       gap: "0 12px",
+                      color: theme.palette.secondary.main,
                     }}
                   >
                     <Box>% Completion</Box>
@@ -361,6 +376,16 @@ const Tasks = (props) => {
               </Box>
             </Card>
           </Box>
+        ) : (
+          <Card
+            style={{
+              width: "1000px",
+              height: "500px",
+              padding: "2rem",
+            }}
+          >
+            <Typography variant="h5">No Project Selected</Typography>
+          </Card>
         )}
       </Box>
     </ThemeProvider>
