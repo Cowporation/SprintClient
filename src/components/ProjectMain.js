@@ -74,7 +74,8 @@ const ProjectMain = () => {
         style={{
           backgroundColor: theme.palette.background.paper,
           display: "flex",
-          width: "100vw",
+          minHeight: "100vh",
+          minWidth: "1234px",
         }}
       >
         <Box
