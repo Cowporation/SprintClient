@@ -236,6 +236,10 @@ const Projects = ({ projectId, selectedDate, view, getProject }) => {
                     onClick={() => view === "dash" && getStory(project._id)}
                     style={{
                       cursor: view === "dash" && "pointer",
+                      color:
+                        viewId === project._id && theme.palette.secondary.main,
+
+                      border: view === "dash" && `1px solid rgba(0,0,0,0.4)`,
                     }}
                   >
                     <Project
