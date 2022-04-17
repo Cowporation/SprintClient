@@ -182,6 +182,9 @@ const Project = (props) => {
                   style={{
                     width: 100,
                     marginLeft: -15,
+                    color:
+                      props.editingId === props.project._id &&
+                      theme.palette.secondary.main,
                   }}
                   onClick={() => setEditing(true)}
                   onMouseDown={() => handleNameMouseDown()}
@@ -228,6 +231,9 @@ const Project = (props) => {
                     marginLeft: -25,
                     minHeight: "30px",
                     width: 100,
+                    color:
+                      props.editingId === props.project._id &&
+                      theme.palette.secondary.main,
                   }}
                   onClick={() => setEditingDesc(true)}
                   onMouseDown={() => handleDescMouseDown()}
@@ -278,7 +284,12 @@ const Project = (props) => {
                 </Box>
               ) : (
                 <Box
-                  style={{ display: props.view === "dash" ? "none" : "flex" }}
+                  style={{
+                    display: props.view === "dash" ? "none" : "flex",
+                    color:
+                      props.editingId === props.project._id &&
+                      theme.palette.secondary.main,
+                  }}
                   onClick={() => setEditingDate(true)}
                   onMouseDown={() => handleDateMouseDown()}
                 >
