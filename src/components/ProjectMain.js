@@ -75,7 +75,6 @@ const ProjectMain = () => {
           backgroundColor: theme.palette.background.paper,
           display: "flex",
           minHeight: "100vh",
-          overflowY: "hidden",
         }}
       >
         <Box
