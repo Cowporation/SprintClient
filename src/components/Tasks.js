@@ -147,7 +147,11 @@ const Tasks = (props) => {
       </Backdrop>
       <Box>
         {props.project ? (
-          <Box>
+          <Box
+            style={{
+              height: "100%",
+            }}
+          >
             <Box
               style={{
                 display: "flex",
