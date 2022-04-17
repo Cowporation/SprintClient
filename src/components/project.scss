@@ -1,25 +1,6 @@
-* {
-  user-select: none;
-}
-.project-container {
-  display:block;
-  padding: 0 2rem;
-  font-size: 12px;
-}
-
-.projects-box {
-  margin-top: 5rem;
-}
 .new-project {
   margin-top: 4rem;
   z-index: 1000;
-}
-
-.btn-add-project {
-  border: none;
-  cursor: pointer;
-  height: 50px;
-  width: 50px;
 }
 .add-button {
   margin-left: -1rem;
@@ -29,25 +10,12 @@
   animation: rotate-keyframes 0.2s;
   transform: rotate(45deg);
 }
-.svg{
-    display: block;
-    margin: 20px auto;
-    max-width: 100%;
+.project-list {
+  overflow:hidden;
+  margin-right:2px;
 }
-  
-.svg-circle-bg {
-    fill: none;
-}
-  
-.svg-circle {
-    fill: none;
-}
-
-.svg-circle-text {
-    font-size: 2rem;
-    text-anchor: middle;
-    fill: #fff;
-    font-weight: bold;
+.project-list:hover {
+  overflow-y:auto;
 }
 @keyframes rotate-keyframes {
   from {

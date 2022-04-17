@@ -61,7 +61,6 @@ const NewStory = ({ newStory }) => {
               setState({
                 id: uuidv4(),
                 portion: e.target.value,
-                delete: "TrashIcon",
               })
             }
           />

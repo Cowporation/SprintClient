@@ -1,6 +1,6 @@
 //Project fetches
 export const postProject = async (project) =>
-  fetch("http://localhost:5001/project", {
+  fetch("http://localhost:5000/project", {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -13,14 +13,14 @@ export const postProject = async (project) =>
     else return null;
   });
 export const fetchProjects = async () =>
-  fetch("http://localhost:5001/project").then((response) => {
+  fetch("http://localhost:5000/project").then((response) => {
     if (response.ok) {
       return response.json();
     } else if (response.status === 404) return "ERROR";
     else return null;
   });
 export const updateProject = (data) =>
-  fetch("http://localhost:5001/project", {
+  fetch("http://localhost:5000/project", {
     method: "PUT",
     headers: { "Content-type": "application/json; charset=UTF-8" },
     body: JSON.stringify(data),
@@ -34,7 +34,7 @@ export const updateProject = (data) =>
   });
 
 export const deleteProject = (id) =>
-  fetch(`http://localhost:5001/project/${id}`, {
+  fetch(`http://localhost:5000/project/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -42,7 +42,7 @@ export const deleteProject = (id) =>
   });
 //Task fetches
 export const fetchTasks = async () =>
-  fetch("http://localhost:5001/task").then((response) => {
+  fetch("http://localhost:5000/task").then((response) => {
     if (response.ok) {
       return response.json();
     } else if (response.status === 404) return "ERROR";
@@ -50,7 +50,7 @@ export const fetchTasks = async () =>
   });
 //Subtask fetches
 export const fetchSubtasks = async () =>
-  fetch("http://localhost:5001/subtask").then((response) => {
+  fetch("http://localhost:5000/subtask").then((response) => {
     if (response.ok) {
       return response.json();
     } else if (response.status === 404) return "ERROR";
@@ -58,7 +58,7 @@ export const fetchSubtasks = async () =>
   });
 //Sprint fetches
 export const fetchSprints = async () =>
-  fetch("http://localhost:5001/sprint").then((response) => {
+  fetch("http://localhost:5000/sprint").then((response) => {
     if (response.ok) {
       return response.json();
     } else if (response.status === 404) return "ERROR";

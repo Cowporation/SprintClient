@@ -21,6 +21,7 @@ import Icon from "@mui/icons-material/MoreHorizSharp";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import EnterIcon from "@mui/icons-material/KeyboardReturn";
+import DoneIcon from "@mui/icons-material/Done";
 
 import theme from "../theme";
 
@@ -28,7 +29,8 @@ const Project = (props) => {
   const escFunction = useCallback(
     (event) => {
       if (event.keyCode === 27) {
-        props.setEditId(null);
+        if (!editing && !editingDesc && !editingDate) props.setEditId(null);
+        else disableEditing();
       }
     },
     [props]
@@ -108,6 +110,7 @@ const Project = (props) => {
     setEditingDesc(false);
     setEditingDate(false);
   };
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -115,14 +118,15 @@ const Project = (props) => {
           backgroundColor: theme.palette.secondary.dark,
           display: "block",
           position: "relative",
+          boxShadow: " 0px -0.6px 6px rgba(0,0,0,0.3)",
           border:
-            props.project._id === props.editingId
-              ? `0.6px solid ${theme.palette.primary.main}`
-              : "0.6px solid black",
+            props.editingId === props.project._id
+              ? "0.5px solid salmon"
+              : "0.5px 0.5px 0px 0.5px solid rgba(0,0,0,0.3)",
           borderRadius: 0,
-          padding: 15,
-          width: "100%",
-          minWidth: "860px",
+          padding: "12px 25px",
+          margin: "0 auto",
+          minWidth: props.view === "dash" ? "300px" : "860px",
         }}
       >
         <ClickAwayListener onClickAway={() => disableEditing()}>
@@ -131,7 +135,10 @@ const Project = (props) => {
             component={"form"}
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(6, 1fr)",
+              minHeight: "25px",
+              gridTemplateColumns:
+                props.view === "dash" ? "repeat(2, 1fr)" : "repeat(6,1fr)",
+              minWidth: props.view === "dash" ? "400px" : "860px",
             }}
           >
             <Box
@@ -144,7 +151,6 @@ const Project = (props) => {
                 <Box
                   style={{
                     display: "flex",
-                    width: 150,
                   }}
                 >
                   <Input
@@ -174,30 +180,18 @@ const Project = (props) => {
               ) : (
                 <Box
                   style={{
-                    display: "flex",
-                    width: "150px",
+                    width: 100,
                   }}
-                  onClick={() => setEditing(!editing)}
+                  onClick={() => setEditing(true)}
                   onMouseDown={() => handleNameMouseDown()}
                 >
                   {props.project.name}
                 </Box>
               )}
             </Box>
-            <Box
-              style={{
-                display: "flex",
-                justifyContent: "right",
-                textAlign: "right",
-                width: "150px",
-              }}
-            >
+            <Box>
               {editingDesc && props.editingId === props.project._id ? (
-                <Box
-                  style={{
-                    display: "flex",
-                  }}
-                >
+                <Box>
                   <Input
                     multiline
                     rows={3}
@@ -228,7 +222,11 @@ const Project = (props) => {
                 </Box>
               ) : (
                 <Box
-                  onClick={() => setEditingDesc(!editingDesc)}
+                  style={{
+                    marginLeft: -25,
+                    width: 100,
+                  }}
+                  onClick={() => setEditingDesc(true)}
                   onMouseDown={() => handleDescMouseDown()}
                 >
                   {props.project.description}
@@ -240,7 +238,6 @@ const Project = (props) => {
                 display: "flex",
                 justifyContent: "right",
                 paddingRight: "10px",
-
                 width: "200px",
                 textAlign: "right",
               }}
@@ -278,30 +275,42 @@ const Project = (props) => {
                 </Box>
               ) : (
                 <Box
-                  onClick={() => setEditingDate(!editingDate)}
+                  style={{ display: props.view === "dash" ? "none" : "flex" }}
+                  onClick={() => setEditingDate(true)}
                   onMouseDown={() => handleDateMouseDown()}
                 >
                   {props.project.startDate}
                 </Box>
               )}
             </Box>
-            <Box style={{ display: "flex", justifyContent: "right" }}>
-              {props.project.totalPoints}
+            <Box
+              style={{
+                display: props.view === "dash" ? "none" : "flex",
+                justifyContent: "right",
+              }}
+            >
+              {parseInt(props.project.totalPoints, 10)}
             </Box>
-            <Box style={{ display: "flex", justifyContent: "right" }}>
-              {props.project.totalCost}
+            <Box
+              style={{
+                display: props.view === "dash" ? "none" : "flex",
+                justifyContent: "right",
+              }}
+            >
+              {parseInt(props.project.totalCost, 10)}
             </Box>
           </Box>
         </ClickAwayListener>
         {props.editingId === props.project._id ? (
           <IconButton
-            color="primary"
+            color="secondary"
             disableRipple
             style={{ position: "absolute", top: 2, right: 50 }}
             ria-describedby={id}
             variant="contained"
+            onClick={() => props.setEditId(null)}
           >
-            <EditIcon />
+            <DoneIcon />
           </IconButton>
         ) : (
           ""
@@ -309,7 +318,12 @@ const Project = (props) => {
         <IconButton
           color="primary"
           disableRipple
-          style={{ position: "absolute", top: 2, right: 0 }}
+          style={{
+            display: props.view === "dash" ? "none" : "flex",
+            position: "absolute",
+            top: 2,
+            right: 0,
+          }}
           ria-describedby={id}
           variant="contained"
           onClick={handleClick}

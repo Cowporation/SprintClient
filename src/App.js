@@ -16,10 +16,10 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <AppBar color="secondary">
-        <Router>
+      <Router>
+        <AppBar color="secondary" style={{ height: "4rem" }}>
           <Container>
-            <Toolbar style={{ height: "5rem" }}>
+            <Toolbar>
               <Box
                 className="logo"
                 variant="h5"
@@ -33,7 +33,6 @@ const App = () => {
               </Box>
               <Box
                 sx={{
-                  flexGrow: 1,
                   display: "flex",
                 }}
               >
@@ -54,12 +53,12 @@ const App = () => {
               </Box>
             </Toolbar>
           </Container>
+        </AppBar>
 
-          <Route path="/Projects" render={(props) => <ProjectMain />} />
-          <Route path="/About" component={About} />
-          <Route path="/" exact component={Home} />
-        </Router>
-      </AppBar>
+        <Route path="/Projects" render={(props) => <ProjectMain />} />
+        <Route path="/About" component={About} />
+        <Route path="/" exact component={Home} />
+      </Router>
     </ThemeProvider>
   );
 };

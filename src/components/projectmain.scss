@@ -1,28 +1,25 @@
-
-
 .s-current-month {
   display: flex;
   justify-content: space-between;
-  margin-top: 4rem;
-  padding: 20px;
+  margin-top: 1rem;
+  padding: 16px;
   font-size: 16px;
-  border-top: solid;
+  border-top: 1px solid;
   border-right: 0.5px solid;
   border-left: 0.5px solid;
   align-items: center;
   text-transform: uppercase;
+  
 }
 .date-select {
   max-width: 455px;
 }
-
 .s-weeks {
   border-right: 0.5px solid;
   border-left: 0.5px solid;
   display: flex;
   justify-items: center;
 }
-
 .s-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -30,19 +27,22 @@
   justify-items: center;
   padding: 0.6rem 0.6rem;
   border: 0.5px solid;
+  
   font-weight: bold;
-  font-size: 15px;
+  font-size: 14px;
 }
 .s-dates {
   height: 3.5em;
   width: 3.5em;
   user-select: none;
-  font-size: 13px;
+  font-size: 15px;
   display: flex;
-  text-align: center;
   justify-content: center;
   align-items: center;
   border: 0.5px solid;
+  border-right: none;
+  border-left:none;
+  border-top:none;
 }
 .s-dates:hover {
   border-style: groove;
@@ -50,19 +50,16 @@
   border: 2px solid salmon;
   color: salmon;
 }
+.s-left:hover, .s-right:hover,
 .s-prev:hover,
 .s-next:hover {
   cursor: pointer;
   color: salmon;
 }
-
-.s-today,
-.today {
+.s-today,.today {
   color: salmon;
 }
-
-.selected-date,
-.s-selected-date {
+.selected-date,.s-selected-date {
   border: 2px solid salmon;
   color: salmon;
 }

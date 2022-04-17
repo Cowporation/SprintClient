@@ -3,8 +3,9 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 //material ui
 import { ThemeProvider } from "@mui/material/styles";
-import { Box, Card } from "@mui/material";
+import { Avatar, Box, Button, CardHeader, Typography } from "@mui/material";
 //icons
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import LeftArrow from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import LeftArrowM from "@mui/icons-material/KeyboardArrowLeft";
 import RightArrow from "@mui/icons-material/KeyboardDoubleArrowRight";
@@ -13,11 +14,14 @@ import RightArrowM from "@mui/icons-material/KeyboardArrowRight";
 import buildCalendar from "./buildCal";
 //components
 import Projects from "./Projects.js";
+import Tasks from "./Tasks.js";
 //theme/css
 import theme from "../theme";
-import "./projectmain.css";
+import "./projectmain.scss";
 
 const ProjectMain = () => {
+  const [view, setView] = useState("");
+
   const [miniCalendar, setMiniCalendar] = useState([]);
   const [calendar, setCalendar] = useState(moment());
 
@@ -48,85 +52,180 @@ const ProjectMain = () => {
   const showDate = (year, month, date) => {
     setSelectedDate(moment([year, month, date]).clone().format("YYYY-MM-DD"));
   };
+
   useEffect(() => {
     setMiniCalendar(buildCalendar(calendar));
   }, [calendar]);
 
+  const changeView = (e) => {
+    setView("dash");
+  };
+  const [vid, setVId] = useState("");
+  const [proj, setProj] = useState();
+  const setViewId = (id) => {
+    setVId(id);
+  };
+  const getProject = (project) => {
+    setProj(project);
+  };
   return (
     <ThemeProvider theme={theme}>
-      <Card style={{ display: "flex", height: "100vh", zIndex: 99 }}>
+      <Box
+        style={{
+          backgroundColor: theme.palette.background.paper,
+          display: "flex",
+          width: "100vw",
+        }}
+      >
         <Box
-          sx={{ width: "350px", bgcolor: theme.palette.secondary.dark }}
-          elevation={3}
+          style={{
+            display: view === "dash" ? "block" : "flex",
+            height: "100vh",
+            position: view === "dash" ? "fixed" : "",
+            left: 0,
+            color: theme.palette.secondary.light,
+            backgroundColor:
+              view === "dash" ? theme.palette.secondary.dark : "",
+            width: view === "dash" ? "400px" : "100vw",
+            zIndex: 1,
+          }}
         >
-          <Box p={2}>
-            <Box className=" s-current-month">
-              <h3>
-                {currSMonthName()} {currSYear()}{" "}
-              </h3>
-              <Box>
-                <LeftArrow
-                  className="fa fa-angle-double-left"
-                  aria-hidden="true"
-                  onClick={() => setCalendar(prevSYear())}
-                />
-                <LeftArrowM
-                  className="fas fa-angle-left s-prev"
-                  onClick={() => setCalendar(prevSMonth())}
-                />
-                <RightArrowM
-                  className="fas fa-angle-right s-next"
-                  onClick={() => setCalendar(nextSMonth())}
-                />
-                <RightArrow
-                  className="fa fa-angle-double-right"
-                  aria-hidden="true"
-                  onClick={() => setCalendar(nextSYear())}
-                />
-              </Box>
+          <Box
+            sx={{
+              minWidth: "400px",
+              padding: 2,
+              paddingBottom: 0,
+              bgcolor: theme.palette.secondary.dark,
+            }}
+          >
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "5.25rem",
+              }}
+            >
+              <Button variant="outlined" onClick={() => setView("project")}>
+                Projects
+              </Button>
+              <Button variant="outlined" onClick={() => changeView()}>
+                Dashboard
+              </Button>
             </Box>
-            <Box className="s-weekdays ">
-              <Box>S</Box>
-              <Box>M</Box>
-              <Box>T</Box>
-              <Box>W</Box>
-              <Box>T</Box>
-              <Box>F</Box>
-              <Box>S</Box>
-            </Box>
-            {miniCalendar.map((week2) => (
-              <Box key={week2} className="s-weeks">
-                {week2.map((day2) => (
-                  <Box
-                    key={day2}
-                    className={
-                      selectedDate === day2.clone().format("YYYY-MM-DD")
-                        ? day2.year() === moment().year() &&
-                          day2.date() === moment().date() &&
-                          day2.month() === moment().month()
-                          ? "s-dates s-today s-selected-date"
-                          : "s-dates s-selected-date"
-                        : day2.year() === moment().year() &&
-                          day2.date() === moment().date() &&
-                          day2.month() === moment().month()
-                        ? "s-dates s-today"
-                        : "s-dates"
-                    }
-                    onClick={() => {
-                      showDate(day2.year(), day2.month(), day2.date());
-                    }}
-                  >
-                    <Box>{day2.clone().format("D").toString()} </Box>
-                  </Box>
-                ))}
+            <Box pt={4}>
+              <Box className=" s-current-month">
+                <h3>
+                  {currSMonthName()} {currSYear()}{" "}
+                </h3>
+                <Box>
+                  <LeftArrow
+                    className="s-left"
+                    aria-hidden="true"
+                    onClick={() => setCalendar(prevSYear())}
+                  />
+                  <LeftArrowM
+                    className="s-prev"
+                    onClick={() => setCalendar(prevSMonth())}
+                  />
+                  <RightArrowM
+                    className="s-next"
+                    onClick={() => setCalendar(nextSMonth())}
+                  />
+                  <RightArrow
+                    className="s-right"
+                    aria-hidden="true"
+                    onClick={() => setCalendar(nextSYear())}
+                  />
+                </Box>
               </Box>
-            ))}
+              <Box className="s-weekdays">
+                <Box>S</Box>
+                <Box>M</Box>
+                <Box>T</Box>
+                <Box>W</Box>
+                <Box>T</Box>
+                <Box>F</Box>
+                <Box>S</Box>
+              </Box>
+              {miniCalendar.map((week2) => (
+                <Box key={week2} className="s-weeks">
+                  {week2.map((day2) => (
+                    <Box
+                      key={day2}
+                      className={
+                        selectedDate === day2.clone().format("YYYY-MM-DD")
+                          ? day2.year() === moment().year() &&
+                            day2.date() === moment().date() &&
+                            day2.month() === moment().month()
+                            ? "s-dates s-today s-selected-date"
+                            : "s-dates s-selected-date"
+                          : day2.year() === moment().year() &&
+                            day2.date() === moment().date() &&
+                            day2.month() === moment().month()
+                          ? "s-dates s-today"
+                          : "s-dates"
+                      }
+                      onClick={() => {
+                        showDate(day2.year(), day2.month(), day2.date());
+                      }}
+                    >
+                      <Box>{day2.clone().format("D").toString()} </Box>
+                    </Box>
+                  ))}
+                </Box>
+              ))}
+            </Box>
+          </Box>
+          <Box
+            style={{
+              width: "100%",
+            }}
+          >
+            <Projects
+              view={view}
+              projectId={setViewId}
+              getProject={getProject}
+            />
           </Box>
         </Box>
-        <Box style={{ width: "100%", overflow: "auto" }}>
-          <Projects />
-        </Box>
-      </Card>
+        {view === "dash" && (
+          <Box
+            style={{
+              padding: "2rem",
+              paddingTop: "12rem",
+              height: "100vh",
+              marginLeft: "400px",
+            }}
+          >
+            <Typography
+              variant="h3"
+              color="primary"
+              gutterBottom
+              component="div"
+              sx={{
+                border: "1px solid grey",
+              }}
+            >
+              <CardHeader
+                titleTypographyProps={{
+                  color: theme.palette.secondary.light,
+                  variant: "h4",
+                }}
+                avatar={
+                  <Avatar
+                    sx={{ bgcolor: theme.palette.primary.main }}
+                    aria-label="recipe"
+                  >
+                    <DashboardIcon />
+                  </Avatar>
+                }
+                title="Project Dashboard"
+              />
+            </Typography>
+            <Tasks vid={vid} project={proj} />
+          </Box>
+        )}
+      </Box>
     </ThemeProvider>
   );
 };
