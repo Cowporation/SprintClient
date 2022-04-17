@@ -118,6 +118,12 @@ const ProjectMain = () => {
               >
                 Dashboard
               </Button>
+              <Button
+                variant={view !== "dash" ? "text" : "outlined"}
+                onClick={() => changeView()}
+              >
+                Dashboard
+              </Button>
             </Box>
             <Box pt={4}>
               <Box className=" s-current-month">
