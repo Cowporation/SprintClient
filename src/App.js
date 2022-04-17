@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ProjectMain from "./components/ProjectMain.js";
 import About from "./components/About.js";
+import User from "./components/User";
 import Home from "./components/Home.js";
 import "./style.css";
 import { ThemeProvider } from "@mui/material/styles";
@@ -12,7 +13,7 @@ import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 import theme from "./theme";
 
 const App = () => {
-  const pages = ["Home", "Projects", "About"];
+  const pages = ["Home", "Projects", "Users", "About"];
 
   return (
     <ThemeProvider theme={theme}>
@@ -58,6 +59,7 @@ const App = () => {
         <Route path="/Projects" render={(props) => <ProjectMain />} />
         <Route path="/About" component={About} />
         <Route path="/Home" component={Home} />
+        <Route path="/Users" component={User} />
       </Router>
     </ThemeProvider>
   );
