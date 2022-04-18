@@ -74,7 +74,7 @@ const ProjectMain = () => {
         style={{
           backgroundColor: theme.palette.background.paper,
           display: "flex",
-          minHeight: "2160px",
+          minHeight: "1080px",
           height: "100vh",
           overflow: "hidden",
           overflowY: "auto",
@@ -196,7 +196,6 @@ const ProjectMain = () => {
           <Box
             style={{
               width: "100%",
-              height: "100vh",
             }}
           >
             <Projects
@@ -211,8 +210,8 @@ const ProjectMain = () => {
           <Box
             style={{
               padding: "2rem",
-              paddingTop: "12rem",
-              height: "100vh",
+              paddingTop: "8rem",
+              height: "100%",
               marginLeft: "400px",
             }}
           >
