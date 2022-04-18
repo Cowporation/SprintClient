@@ -70,13 +70,7 @@ const ProjectMain = () => {
   };
   return (
     <ThemeProvider theme={theme}>
-      <Box
-        style={{
-          backgroundColor: theme.palette.background.paper,
-          display: "flex",
-          minHeight: "100%",
-        }}
-      >
+      <Box>
         <Box
           style={{
             backgroundColor: theme.palette.background.paper,
