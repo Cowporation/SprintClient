@@ -6,14 +6,16 @@ import ProjectMain from "./components/ProjectMain.js";
 import About from "./components/About.js";
 import User from "./components/User";
 import Home from "./components/Home.js";
+import StoryLists from "./components/StoryLists.js"
 import "./style.css";
 import { ThemeProvider } from "@mui/material/styles";
 import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 
 import theme from "./theme";
+import { fetchSprints } from "./components/fetcher.js";
 
 const App = () => {
-  const pages = ["Home", "Projects", "Users", "About"];
+  const pages = ["Home", "Projects", "Users", "Sprints", "About"];
 
   return (
     <ThemeProvider theme={theme}>
@@ -60,6 +62,7 @@ const App = () => {
         <Route path="/About" component={About} />
         <Route path="/Home" component={Home} />
         <Route path="/Users" component={User} />
+        <Route path="/Sprints" component={StoryLists} />
       </Router>
     </ThemeProvider>
   );
