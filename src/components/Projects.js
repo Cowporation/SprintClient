@@ -124,9 +124,9 @@ const Projects = ({ projectId, selectedDate, view, getProject }) => {
 
       <Box
         style={{
-          position: "absolute",
-          top: view === "dash" ? "40rem" : "4rem",
-          right: view === "dash" ? "1rem" : 0,
+          position: "fixed",
+          top: "4rem",
+          right: 0,
           padding: view === "dash" ? "0" : "2.2rem",
         }}
       >
