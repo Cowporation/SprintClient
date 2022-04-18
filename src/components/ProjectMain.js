@@ -74,8 +74,8 @@ const ProjectMain = () => {
         style={{
           backgroundColor: theme.palette.background.paper,
           display: "flex",
-          minHeight: "2160px",
-          overflowY: "auto",
+          minHeight: "100vh",
+          overflowY: "hidden",
         }}
       >
         <Box
@@ -86,10 +86,8 @@ const ProjectMain = () => {
             color: theme.palette.secondary.light,
             backgroundColor:
               view === "dash" ? theme.palette.secondary.dark : "",
-            height: "100vh",
             width: view === "dash" ? "400px" : "100vw",
             zIndex: 1,
-            overflowY: "auto",
             overflowX: "hidden",
           }}
         >
@@ -188,7 +186,7 @@ const ProjectMain = () => {
           <Box
             style={{
               width: "100%",
-              height: "100%",
+              height: "100vh",
             }}
           >
             <Projects
@@ -204,7 +202,6 @@ const ProjectMain = () => {
             style={{
               padding: "2rem",
               paddingTop: "12rem",
-              height: "100vh",
               marginLeft: "400px",
             }}
           >
