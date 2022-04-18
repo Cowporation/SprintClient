@@ -74,165 +74,174 @@ const ProjectMain = () => {
         style={{
           backgroundColor: theme.palette.background.paper,
           display: "flex",
-          minHeight: "100vh",
-          overflowY: "hidden",
+          minHeight: "100%",
         }}
       >
         <Box
           style={{
-            display: view === "dash" ? "block" : "flex",
-            position: view === "dash" ? "fixed" : "fixed",
-            left: 0,
-            color: theme.palette.secondary.light,
-            backgroundColor:
-              view === "dash" ? theme.palette.secondary.dark : "",
-            width: view === "dash" ? "400px" : "100vw",
-            zIndex: 1,
-            overflowX: "hidden",
+            backgroundColor: theme.palette.background.paper,
+            display: "flex",
+            height: "100vh",
           }}
         >
           <Box
-            sx={{
-              minWidth: "400px",
-              padding: 2,
-              paddingBottom: 0,
-              bgcolor: theme.palette.secondary.dark,
+            style={{
+              display: view === "dash" ? "block" : "flex",
+              position: view === "dash" ? "fixed" : "fixed",
+              left: 0,
+              color: theme.palette.secondary.light,
+              backgroundColor:
+                view === "dash" ? theme.palette.secondary.dark : "",
+              width: view === "dash" ? "400px" : "100vw",
+              zIndex: 1,
+              height: "100vh",
+
+              overflowX: "hidden",
             }}
           >
             <Box
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "5.25rem",
-              }}
-            >
-              <Button
-                variant={view !== "dash" ? "outlined" : "text"}
-                onClick={() => setView("project")}
-              >
-                Projects
-              </Button>
-              <Button
-                variant={view !== "dash" ? "text" : "outlined"}
-                onClick={() => changeView()}
-              >
-                Dashboard
-              </Button>
-            </Box>
-            <Box pt={4}>
-              <Box className=" s-current-month">
-                <h3>
-                  {currSMonthName()} {currSYear()}{" "}
-                </h3>
-                <Box>
-                  <LeftArrow
-                    className="s-left"
-                    aria-hidden="true"
-                    onClick={() => setCalendar(prevSYear())}
-                  />
-                  <LeftArrowM
-                    className="s-prev"
-                    onClick={() => setCalendar(prevSMonth())}
-                  />
-                  <RightArrowM
-                    className="s-next"
-                    onClick={() => setCalendar(nextSMonth())}
-                  />
-                  <RightArrow
-                    className="s-right"
-                    aria-hidden="true"
-                    onClick={() => setCalendar(nextSYear())}
-                  />
-                </Box>
-              </Box>
-              <Box className="s-weekdays">
-                <Box>S</Box>
-                <Box>M</Box>
-                <Box>T</Box>
-                <Box>W</Box>
-                <Box>T</Box>
-                <Box>F</Box>
-                <Box>S</Box>
-              </Box>
-              {miniCalendar.map((week2) => (
-                <Box key={week2} className="s-weeks">
-                  {week2.map((day2) => (
-                    <Box
-                      key={day2}
-                      className={
-                        selectedDate === day2.clone().format("YYYY-MM-DD")
-                          ? day2.year() === moment().year() &&
-                            day2.date() === moment().date() &&
-                            day2.month() === moment().month()
-                            ? "s-dates s-today s-selected-date"
-                            : "s-dates s-selected-date"
-                          : day2.year() === moment().year() &&
-                            day2.date() === moment().date() &&
-                            day2.month() === moment().month()
-                          ? "s-dates s-today"
-                          : "s-dates"
-                      }
-                      onClick={() => {
-                        showDate(day2.year(), day2.month(), day2.date());
-                      }}
-                    >
-                      <Box>{day2.clone().format("D").toString()} </Box>
-                    </Box>
-                  ))}
-                </Box>
-              ))}
-            </Box>
-          </Box>
-          <Box
-            style={{
-              width: "100%",
-              height: "100vh",
-            }}
-          >
-            <Projects
-              view={view}
-              projectId={setViewId}
-              getProject={getProject}
-              selectedDate={selectedDate}
-            />
-          </Box>
-        </Box>
-        {view === "dash" && (
-          <Box
-            style={{
-              padding: "2rem",
-              paddingTop: "12rem",
-              marginLeft: "400px",
-            }}
-          >
-            <Typography
-              variant="h3"
-              color="primary"
-              gutterBottom
-              component="div"
               sx={{
-                border: "1px solid grey",
+                minWidth: "400px",
+                padding: 2,
+                paddingBottom: 0,
+                bgcolor: theme.palette.secondary.dark,
               }}
             >
-              <CardHeader
-                titleTypographyProps={{
-                  color: theme.palette.secondary.light,
-                  variant: "h4",
+              <Box
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginTop: "5.25rem",
                 }}
-                avatar={
-                  <Avatar
-                    sx={{ bgcolor: theme.palette.primary.main }}
-                    aria-label="recipe"
-                  >
-                    <DashboardIcon />
-                  </Avatar>
-                }
-                title="Project Dashboard"
+              >
+                <Button
+                  variant={view !== "dash" ? "outlined" : "text"}
+                  onClick={() => setView("project")}
+                >
+                  Projects
+                </Button>
+                <Button
+                  variant={view !== "dash" ? "text" : "outlined"}
+                  onClick={() => changeView()}
+                >
+                  Dashboard
+                </Button>
+              </Box>
+              <Box pt={4}>
+                <Box className=" s-current-month">
+                  <h3>
+                    {currSMonthName()} {currSYear()}{" "}
+                  </h3>
+                  <Box>
+                    <LeftArrow
+                      className="s-left"
+                      aria-hidden="true"
+                      onClick={() => setCalendar(prevSYear())}
+                    />
+                    <LeftArrowM
+                      className="s-prev"
+                      onClick={() => setCalendar(prevSMonth())}
+                    />
+                    <RightArrowM
+                      className="s-next"
+                      onClick={() => setCalendar(nextSMonth())}
+                    />
+                    <RightArrow
+                      className="s-right"
+                      aria-hidden="true"
+                      onClick={() => setCalendar(nextSYear())}
+                    />
+                  </Box>
+                </Box>
+                <Box className="s-weekdays">
+                  <Box>S</Box>
+                  <Box>M</Box>
+                  <Box>T</Box>
+                  <Box>W</Box>
+                  <Box>T</Box>
+                  <Box>F</Box>
+                  <Box>S</Box>
+                </Box>
+                {miniCalendar.map((week2) => (
+                  <Box key={week2} className="s-weeks">
+                    {week2.map((day2) => (
+                      <Box
+                        key={day2}
+                        className={
+                          selectedDate === day2.clone().format("YYYY-MM-DD")
+                            ? day2.year() === moment().year() &&
+                              day2.date() === moment().date() &&
+                              day2.month() === moment().month()
+                              ? "s-dates s-today s-selected-date"
+                              : "s-dates s-selected-date"
+                            : day2.year() === moment().year() &&
+                              day2.date() === moment().date() &&
+                              day2.month() === moment().month()
+                            ? "s-dates s-today"
+                            : "s-dates"
+                        }
+                        onClick={() => {
+                          showDate(day2.year(), day2.month(), day2.date());
+                        }}
+                      >
+                        <Box>{day2.clone().format("D").toString()} </Box>
+                      </Box>
+                    ))}
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+            <Box
+              style={{
+                width: "100%",
+                height: "20vh",
+              }}
+            >
+              <Projects
+                view={view}
+                projectId={setViewId}
+                getProject={getProject}
+                selectedDate={selectedDate}
               />
-            </Typography>
-            <Tasks vid={vid} project={proj} />
+            </Box>
           </Box>
-        )}
+          {view === "dash" && (
+            <Box
+              style={{
+                padding: "2rem",
+                paddingTop: "12rem",
+                marginLeft: "400px",
+              }}
+            >
+              <Typography
+                variant="h3"
+                color="primary"
+                gutterBottom
+                component="div"
+                sx={{
+                  border: "1px solid grey",
+                }}
+              >
+                <CardHeader
+                  titleTypographyProps={{
+                    color: theme.palette.secondary.light,
+                    variant: "h4",
+                  }}
+                  avatar={
+                    <Avatar
+                      sx={{ bgcolor: theme.palette.primary.main }}
+                      aria-label="recipe"
+                    >
+                      <DashboardIcon />
+                    </Avatar>
+                  }
+                  title="Project Dashboard"
+                />
+              </Typography>
+              <Tasks vid={vid} project={proj} />
+            </Box>
+          )}
+        </Box>
       </Box>
     </ThemeProvider>
   );

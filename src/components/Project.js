@@ -136,6 +136,8 @@ const Project = (props) => {
             style={{
               display: "grid",
               minHeight: "25px",
+              alignItems: "center",
+
               gridTemplateColumns:
                 props.view === "dash" ? "repeat(2, 1fr)" : "repeat(6,1fr)",
               minWidth: props.view === "dash" ? "400px" : "860px",
@@ -289,6 +291,7 @@ const Project = (props) => {
                     color:
                       props.editingId === props.project._id &&
                       theme.palette.secondary.main,
+                    alignItems: "center",
                   }}
                   onClick={() => setEditingDate(true)}
                   onMouseDown={() => handleDateMouseDown()}
@@ -303,12 +306,13 @@ const Project = (props) => {
                 justifyContent: "right",
               }}
             >
-              {parseInt(props.project.totalPoints, 10)}
+              {parseInt(props.project.totalPoints)}
             </Box>
             <Box
               style={{
                 display: props.view === "dash" ? "none" : "flex",
                 justifyContent: "right",
+                alignItems: "center",
               }}
             >
               {parseInt(props.project.totalCost, 10)}
