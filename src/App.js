@@ -63,6 +63,7 @@ const App = () => {
         <Route path="/Home" component={Home} />
         <Route path="/Users" component={User} />
         <Route path="/Sprints" component={StoryLists} />
+        <Route path="/" exact component={Home} />
       </Router>
     </ThemeProvider>
   );
