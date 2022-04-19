@@ -183,7 +183,7 @@ const StoryLists = () => {
           refresh={fetchStories}
         ></StoryDialog>
         <Paper
-          style={{ backgroundColor: theme.palette.background.paper, paddingTop: "4.5%", }}
+          style={{ minHeight: "1000px",backgroundColor: theme.palette.background.paper, paddingTop: "4.5%", }}
         >
           <Paper
             component="div"
