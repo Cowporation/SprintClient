@@ -7,9 +7,6 @@ import {
   CardContent,
   Typography,
   TextField,
-  AppBar,
-  Toolbar,
-  Box,
   Button,
   Snackbar,
   Slide,
@@ -25,7 +22,10 @@ import {
   RadioGroup,
   FormControlLabel,
   FormControl,
+  IconButton,
 } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import theme from "../theme";
 //import "../App.css";
 const SERVER = "http://localhost:5000/";
@@ -74,9 +74,10 @@ const UserComponent = () => {
   };
 
   const columns = [
-    { id: "firstName", label: "First Name", minWidth: 150 },
-    { id: "lastName", label: "Last Name", minWidth: 150 },
-    { id: "role", label: "Role", minWidth: 200 },
+    { id: "firstName", label: "First Name", minWidth: 180 },
+    { id: "lastName", label: "Last Name", minWidth: 180 },
+    { id: "role", label: "Role", minWidth: 50 },
+    { id: "action", label: "Action", minWidth: 20 },
   ];
   const handleChangePage = (event, newPage) => {
     setState({ page: newPage });
@@ -90,7 +91,6 @@ const UserComponent = () => {
     fetchProjects();
   }, []);
   const onChangeRoleAutoComplete = (e, selectedOption) => {
-    console.log(state.users);
     if (selectedOption) {
       setState({
         //alert: state.alerts.filter((a) => a.name === selectedOption)[0],
@@ -107,7 +107,6 @@ const UserComponent = () => {
   };
   const onChangeProjectAutoComplete = (e, selectedOption) => {
     if (selectedOption) {
-      console.log(selectedOption.users);
       usersByProject(selectedOption);
       if (state.user) {
         setState({ addButtonDisabled: false });
@@ -124,7 +123,6 @@ const UserComponent = () => {
   };
   const onChangeUserAutoComplete = (e, selectedOption) => {
     if (selectedOption) {
-      console.log(selectedOption);
       if (state.project) {
         setState({ addButtonDisabled: false });
       } else {
@@ -223,6 +221,35 @@ const UserComponent = () => {
       console.log(error);
     }
   };
+
+  const removeUserFromProject = async (user) => {
+    try {
+      let timestamp = new Date().toLocaleString("sv-SE");
+      let data = {
+        projectId: state.project._id,
+        userId: user._id,
+      };
+      let response = await fetch(SERVER + `project/user`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        let json = await response.json();
+        setState({
+          contactServer: true,
+          msg: `user ${user.firstName} removed from project ${state.project.name} on ${timestamp}.`,
+        });
+        state.project.users = state.project.users.filter(user => user._id !=user._id);
+        usersByProject(state.project);
+        await fetchProjects();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const fetchUsers = async () => {
     try {
       let response = await fetch(SERVER + `user/`, {
@@ -236,7 +263,6 @@ const UserComponent = () => {
         users: json.users,
       });
     } catch (error) {
-      console.log(error);
       setState({
         msg: `Problem loading server data - ${error.message}`,
       });
@@ -252,7 +278,6 @@ const UserComponent = () => {
         },
       });
       let json = await response.json();
-      console.log(json.projects);
       setState({
         projects: json.projects,
       });
@@ -397,12 +422,31 @@ const UserComponent = () => {
                             key={index}
                           >
                             {columns.map((column, indexCol) => {
-                              const value = row[column.id];
-                              return (
-                                <TableCell key={indexCol} align={column.align}>
-                                  {value}
-                                </TableCell>
-                              );
+                              if (column.id === "action") {
+                                return (
+                                  <TableCell
+                                    key={indexCol}
+                                    align={column.align}
+                                  >
+                                    <IconButton
+                                      aria-label="delete"
+                                      color="primary"
+                                    >
+                                      <PersonRemoveIcon />
+                                    </IconButton>
+                                  </TableCell>
+                                );
+                              } else {
+                                const value = row[column.id];
+                                return (
+                                  <TableCell
+                                    key={indexCol}
+                                    align={column.align}
+                                  >
+                                    {value}
+                                  </TableCell>
+                                );
+                              }
                             })}
                           </TableRow>
                         );
@@ -503,12 +547,38 @@ const UserComponent = () => {
                             key={index}
                           >
                             {columns.map((column, indexCol) => {
-                              const value = row[column.id];
-                              return (
-                                <TableCell key={indexCol} align={column.align}>
-                                  {value}
-                                </TableCell>
-                              );
+                              if (
+                                column.id === "action" &&
+                                state.projectUsers[0].firstName !=
+                                  "Select a project to view users assigned" &&
+                                state.projectUsers[0].firstName !=
+                                  "No Users assigned for selected project"
+                              ) {
+                                return (
+                                  <TableCell
+                                    key={indexCol}
+                                    align={column.align}
+                                  >
+                                    <IconButton
+                                      aria-label="delete"
+                                      color="primary"
+                                      onClick={() => removeUserFromProject(row)}
+                                    >
+                                      <PersonRemoveIcon />
+                                    </IconButton>
+                                  </TableCell>
+                                );
+                              } else {
+                                const value = row[column.id];
+                                return (
+                                  <TableCell
+                                    key={indexCol}
+                                    align={column.align}
+                                  >
+                                    {value}
+                                  </TableCell>
+                                );
+                              }
                             })}
                           </TableRow>
                         );

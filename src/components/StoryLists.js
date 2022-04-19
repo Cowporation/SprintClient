@@ -8,7 +8,7 @@ import React, {
 import DragList from "./DragList";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme";
-import { Paper, Card, Box, TextField, Button } from "@mui/material";
+import { Paper, Typography, Box, TextField, Button } from "@mui/material";
 import StoryDialog from "./StoryDialog";
 
 const SERVER = "http://localhost:5000/";
@@ -93,7 +93,7 @@ const StoryLists = () => {
         body: JSON.stringify(data),
       });
       let json = await response.json();
-      fetchStories();
+      fetchStories(state.projects);
     } catch (error) {
       console.log(error);
     }
@@ -182,15 +182,47 @@ const StoryLists = () => {
           handleCloseDialog={handleCloseStoryDialog}
           refresh={fetchStories}
         ></StoryDialog>
-        <Card
-          style={{
-            paddingTop: "3%",
-            marginTop: "2%",
-            minHeight: "2160px",
-            overflowY: "auto",
-            zIndex: 1,
-          }}
+        <Paper
+          style={{ backgroundColor: theme.palette.background.paper, paddingTop: "4.5%", }}
         >
+          <Paper
+            component="div"
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              p: 1,
+              m: 1,
+              color: (theme) =>
+                theme.palette.mode === "dark" ? "grey.300" : "grey.800",
+              fontSize: "1.275rem",
+              fontWeight: "600",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                width: "30%",
+              }}
+            >
+              <TextField
+                label="name (e.g. Sprint 2)"
+                onChange={onSprintNameChange}
+                value={state.newSprintName}
+              ></TextField>
+              <Button
+                onClick={() => addNewSprint()}
+                disabled={state.newSprintName === ""}
+                variant="contained"
+                style={{ marginRight: "2%" }}
+              >
+                {" "}
+                Add sprint
+              </Button>
+            </Box>
+          </Paper>
           <Paper
             component="div"
             sx={{
@@ -204,49 +236,9 @@ const StoryLists = () => {
               borderRadius: 2,
             }}
           >
-            <Paper
-              component="div"
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                p: 1,
-                m: 1,
-                color: (theme) =>
-                  theme.palette.mode === "dark" ? "grey.300" : "grey.800",
-                border: "1px solid",
-
-                fontSize: "1.275rem",
-                fontWeight: "600",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  width: "30%",
-                }}
-              >
-                <TextField
-                  label="name (e.g. Sprint 2)"
-                  onChange={onSprintNameChange}
-                  value={state.newSprintName}
-                ></TextField>
-                <Button
-                  onClick={() => addNewSprint()}
-                  disabled={state.newSprintName === ""}
-                  variant="contained"
-                  style={{ marginRight: "2%" }}
-                >
-                  {" "}
-                  Add sprint
-                </Button>
-              </Box>
-            </Paper>
             <DragList></DragList>
           </Paper>
-        </Card>
+        </Paper>
       </ThemeProvider>
     </statesContext.Provider>
   );
