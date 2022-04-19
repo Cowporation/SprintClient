@@ -222,6 +222,39 @@ const UserComponent = () => {
     }
   };
 
+  const unregisterUser = async (user) => {
+    try {
+      let timestamp = new Date().toLocaleString("sv-SE");
+      let canUnregister = true;
+      state.projects?.forEach((project) => {
+        if (project.users.includes(user._id)) {
+          canUnregister = false;
+          setState({
+            contactServer: true,
+            msg: `User ${user.firstName} is assigned to project ${project.name}; can't delete.`,
+          });
+        }
+      });
+      if (canUnregister) {
+        let response = await fetch(SERVER + `user/${user._id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        });
+        if (response.ok) {
+          let json = await response.json();
+          setState({
+            contactServer: true,
+            msg: `user ${user.firstName} unregistered on ${timestamp}.`,
+          });
+          await fetchUsers();
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const removeUserFromProject = async (user) => {
     try {
       let timestamp = new Date().toLocaleString("sv-SE");
@@ -242,7 +275,9 @@ const UserComponent = () => {
           contactServer: true,
           msg: `user ${user.firstName} removed from project ${state.project.name} on ${timestamp}.`,
         });
-        state.project.users = state.project.users.filter(user => user._id !=user._id);
+        state.project.users = state.project.users.filter(
+          (user) => user._id != user._id
+        );
         usersByProject(state.project);
         await fetchProjects();
       }
@@ -431,6 +466,7 @@ const UserComponent = () => {
                                     <IconButton
                                       aria-label="delete"
                                       color="primary"
+                                      onClick={() => unregisterUser(row)}
                                     >
                                       <PersonRemoveIcon />
                                     </IconButton>
