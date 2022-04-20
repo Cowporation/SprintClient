@@ -6,7 +6,7 @@ import ProjectMain from "./components/ProjectMain.js";
 import About from "./components/About.js";
 import User from "./components/User";
 import Home from "./components/Home.js";
-import StoryLists from "./components/StoryLists.js"
+import StoryLists from "./components/StoryLists.js";
 import "./style.css";
 import { ThemeProvider } from "@mui/material/styles";
 import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";

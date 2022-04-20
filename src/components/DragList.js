@@ -13,7 +13,6 @@ const ListGrid = styled.div`
   display: grid;
   grid-template-columns: ${(props) => props.numberOfCol};
   grid-gap: 8px;
-  
 `;
 
 const removeFromList = (list, index) => {
@@ -30,7 +29,7 @@ const addToList = (list, index, element) => {
 
 const SERVER = "http://localhost:5000/";
 const DragList = (props) => {
-  const {state, setState} = useContext(statesContext);
+  const { state, setState } = useContext(statesContext);
   //const [elements, setElements] = React.useState();
   //const lists = props.lists;
   const numberOfCol = () => {
@@ -44,44 +43,43 @@ const DragList = (props) => {
     //setElements(props.elements);
   }, []);
 
-  const updateStory = async (story, destination) =>{
+  const updateStory = async (story, destination) => {
     let sprintId;
     let id = story._id;
-    if(destination === "Backlog"){
-        sprintId = "Backlog";
-        story.belongsToID = null;
-        story.belongsTo = "Backlog"; 
-    }else{
-        state.lists.forEach((list) =>{
-            if(list.name === destination){
-                sprintId = list._id;
-            }
-        })
-        story.belongsToID = sprintId;
-        story.belongsTo = destination; 
+    if (destination === "Backlog") {
+      sprintId = "Backlog";
+      story.belongsToID = null;
+      story.belongsTo = "Backlog";
+    } else {
+      state.lists.forEach((list) => {
+        if (list.name === destination) {
+          sprintId = list._id;
+        }
+      });
+      story.belongsToID = sprintId;
+      story.belongsTo = destination;
     }
 
     try {
-        let data = {
-            id: id,
-            sprintId: sprintId,
-          };
-        let response = await fetch(SERVER + `task/movetolist`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-          },
-          body: JSON.stringify(data),
-        });
-        let json = await response.json();
-        console.log(json);
-        
-        return story;
-      } catch (error) {
-        console.log(error);
-      }
+      let data = {
+        id: id,
+        sprintId: sprintId,
+      };
+      let response = await fetch(SERVER + `task/movetolist`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(data),
+      });
+      let json = await response.json();
+      console.log(json);
 
-  }
+      return story;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const onDragEnd = async (result) => {
     if (!result.destination) {
       return;
@@ -95,7 +93,7 @@ const DragList = (props) => {
       sourceList,
       result.source.index
     );
-    
+
     //console.log(state.lists);
     console.log(removedElement);
     updateStory(removedElement, result.destination.droppableId);
@@ -108,17 +106,25 @@ const DragList = (props) => {
       removedElement
     );
     console.log(listCopy);
-    setState({listedStories: listCopy});
+    setState({ listedStories: listCopy });
     //setElements(listCopy);
   };
 
   return (
     <DragDropContextContainer>
       <DragDropContext onDragEnd={onDragEnd}>
-        <ListGrid numberOfCol={numberOfCol()}>
+        <ListGrid
+          numberOfCol={numberOfCol()}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(5,1fr)",
+          }}
+        >
           {state.lists.map((listKey, index) => (
             <DraggableElement
-              elements={state.listedStories ? state.listedStories[listKey.name] : null}
+              elements={
+                state.listedStories ? state.listedStories[listKey.name] : null
+              }
               key={index}
               prefix={listKey.name}
             />
