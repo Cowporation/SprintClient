@@ -364,7 +364,7 @@ const Tasks = (props) => {
                     justifySelf: "center",
                     height: "400px",
                     marginBottom: "110rem",
-                    marginRight: tasks.length >= 10 && "7px",
+                    marginRight: tasks.length >= 10 ? "7px" : "-1px",
                   }}
                 >
                   {tasks.length !== 0
