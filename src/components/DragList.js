@@ -27,7 +27,7 @@ const addToList = (list, index, element) => {
   return result;
 };
 
-const SERVER = "http://localhost:5000/";
+const SERVER = "http://localhost:5001/";
 const DragList = (props) => {
   const { state, setState } = useContext(statesContext);
   //const [elements, setElements] = React.useState();

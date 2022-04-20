@@ -25,8 +25,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import React, { useEffect, useContext, useState } from "react";
 import SubtaskRow from "./SubtaskRow";
-const SERVER = "http://localhost:5000/";
-
+const SERVER = "http://localhost:5001/";
 
 const SubtaskTable = (props) => {
   const { state, setState } = useContext(statesContext);

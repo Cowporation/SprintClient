@@ -11,7 +11,7 @@ import theme from "../theme";
 import { Paper, Typography, Box, TextField, Button } from "@mui/material";
 import StoryDialog from "./StoryDialog";
 
-const SERVER = "http://localhost:5000/";
+const SERVER = "http://localhost:5001/";
 export const statesContext = createContext();
 const StoryLists = () => {
   const initialState = {
@@ -183,7 +183,11 @@ const StoryLists = () => {
           refresh={fetchStories}
         ></StoryDialog>
         <Paper
-          style={{ minHeight: "1000px",backgroundColor: theme.palette.background.paper, paddingTop: "4.5%", }}
+          style={{
+            minHeight: "1000px",
+            backgroundColor: theme.palette.background.paper,
+            paddingTop: "4.5%",
+          }}
         >
           <Paper
             component="div"

@@ -25,7 +25,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import UserHourRow from "./UserHourRow";
 import React, { useEffect, useContext, useState } from "react";
-const SERVER = "http://localhost:5000/";
+const SERVER = "http://localhost:5001/";
 
 const SubtaskRow = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -37,18 +37,20 @@ const SubtaskRow = (props) => {
     reestHours: 0,
   });
   const { state, setState } = useContext(statesContext);
-  React.useEffect(() => {calculateHoursForStory()}, []);
+  React.useEffect(() => {
+    calculateHoursForStory();
+  }, []);
   const calculateHoursForStory = () => {
     let data = {
       estHours: 0,
       actHours: 0,
       reestHours: 0,
     };
-    props.row.workedby.forEach(user =>{
-      data.estHours +=user.estHours;
-      data.actHours +=user.actHours;
-      data.reestHours +=user.reestHours;
-    })
+    props.row.workedby.forEach((user) => {
+      data.estHours += user.estHours;
+      data.actHours += user.actHours;
+      data.reestHours += user.reestHours;
+    });
     setWorkSummary(data);
   };
   const CustomPaper = (props) => {

@@ -24,19 +24,19 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import React, { useEffect, useContext, useState } from "react";
-const SERVER = "http://localhost:5000/";
+const SERVER = "http://localhost:5001/";
 
 const UserHourRow = (props) => {
   const [estHours, setEstHours] = React.useState(props.user.estHours);
   const [actHours, setActHours] = React.useState(props.user.actHours);
   const [reestHours, setReestHours] = React.useState(props.user.reestHours);
   const { state, setState } = useContext(statesContext);
-  const onUpdate = async () =>{
-      props.user.actHours = actHours;
-      props.user.estHours = estHours;
-      props.user.reestHours = reestHours;
-      props.update(props.user);
-  }
+  const onUpdate = async () => {
+    props.user.actHours = actHours;
+    props.user.estHours = estHours;
+    props.user.reestHours = reestHours;
+    props.update(props.user);
+  };
   return (
     <React.Fragment>
       <TableRow>
@@ -46,9 +46,9 @@ const UserHourRow = (props) => {
         <TableCell align="center">
           <TextField
             type="number"
-            value = {estHours}
+            value={estHours}
             style={{ width: "45%" }}
-            onChange = {(e) => setEstHours(e.target.valueAsNumber || 0)}
+            onChange={(e) => setEstHours(e.target.valueAsNumber || 0)}
             inputProps={{
               style: { textAlign: "right" },
               min: 0,
@@ -58,8 +58,8 @@ const UserHourRow = (props) => {
         <TableCell align="center">
           <TextField
             type="number"
-            value = {actHours}
-            onChange = {(e) => setActHours(e.target.valueAsNumber || 0)}
+            value={actHours}
+            onChange={(e) => setActHours(e.target.valueAsNumber || 0)}
             style={{ width: "45%" }}
             inputProps={{
               style: { textAlign: "right" },
@@ -70,8 +70,8 @@ const UserHourRow = (props) => {
         <TableCell align="center">
           <TextField
             type="number"
-            value = {reestHours}
-            onChange = {(e) => setReestHours(e.target.valueAsNumber || 0)}
+            value={reestHours}
+            onChange={(e) => setReestHours(e.target.valueAsNumber || 0)}
             style={{ width: "45%" }}
             inputProps={{
               style: { textAlign: "right" },
