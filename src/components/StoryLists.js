@@ -8,7 +8,7 @@ import React, {
 import DragList from "./DragList";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme";
-import { Paper, Typography, Box, TextField, Button } from "@mui/material";
+import { Paper, Snackbar, Box, TextField, Button, Slide } from "@mui/material";
 import StoryDialog from "./StoryDialog";
 
 const SERVER = "http://localhost:5000/";
@@ -25,6 +25,8 @@ const StoryLists = () => {
     selectedStory: null,
     selectedStoryUsers: [],
     newSubtaskName: "",
+    contactServer: false,
+    msg: ""
   };
   const reducer = (state, newState) => ({ ...state, ...newState });
   const [state, setState] = useReducer(reducer, initialState);
@@ -33,7 +35,14 @@ const StoryLists = () => {
     fetchUsers();
   }, []);
 
-  const handleOpenStoryDialog = () => setState({ storyDialogOpen: true });
+  const snackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setState({
+      contactServer: false,
+    });
+  };
   const handleCloseStoryDialog = () => setState({ storyDialogOpen: false });
   const onSprintNameChange = (e) => {
     setState({ newSprintName: e.target.value });
@@ -81,6 +90,13 @@ const StoryLists = () => {
   };
 
   const addNewSprint = async () => {
+    if(state.lists.filter(list => list.name ===state.newSprintName).length > 0){
+      setState({
+        contactServer: true,
+        msg: `${state.newSprintName} already exists; Please use a unique sprint name`,
+      });
+      return;
+    }
     try {
       let data = {
         name: state.newSprintName,
@@ -93,7 +109,13 @@ const StoryLists = () => {
         body: JSON.stringify(data),
       });
       let json = await response.json();
-      fetchStories(state.projects);
+      setState({
+        contactServer: true,
+        msg: `${json.msg}`,
+      });
+      if(response.ok){
+        fetchStories(state.projects);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -236,9 +258,16 @@ const StoryLists = () => {
               borderRadius: 2,
             }}
           >
-            <DragList></DragList>
+            <DragList update = {fetchStories}></DragList>
           </Paper>
         </Paper>
+        <Snackbar
+        open={state.contactServer}
+        message={state.msg}
+        autoHideDuration={3000}
+        onClose={snackbarClose}
+        TransitionComponent={Slide}
+      ></Snackbar>
       </ThemeProvider>
     </statesContext.Provider>
   );

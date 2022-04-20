@@ -24,7 +24,6 @@ import {
   FormControl,
   IconButton,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import theme from "../theme";
 //import "../App.css";

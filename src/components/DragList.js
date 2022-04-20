@@ -121,6 +121,7 @@ const DragList = (props) => {
               elements={state.listedStories ? state.listedStories[listKey.name] : null}
               key={index}
               prefix={listKey.name}
+              update = {props.update}
             />
           ))}
         </ListGrid>
