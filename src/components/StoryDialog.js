@@ -36,7 +36,17 @@ const StoryDialog = (props) => {
         body: JSON.stringify(data),
       });
       let json = await response.json();
-      console.log(json);
+      if(response.ok){
+        setState({
+          contactServer: true,
+          msg: `Subtask ${state.newSubtaskName} added`,
+        });
+      }else{
+        setState({
+          contactServer: true,
+          msg: `${json.msg}`,
+        });
+      }
       props.refresh(state.projects);
       setState({ newSubtaskName: "" });
     } catch (error) {

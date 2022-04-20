@@ -34,8 +34,12 @@ const DragList = (props) => {
   //const lists = props.lists;
   const numberOfCol = () => {
     let col = "";
-    for (let i = 0; i < state.lists.length; ++i) {
-      col += "1fr ";
+    if(state.lists.length < 5){
+      for (let i = 0; i < state.lists.length; ++i) {
+        col += "1fr ";
+      }
+    }else{
+      col = "repeat(5,1fr)";
     }
     return col;
   };
@@ -115,10 +119,6 @@ const DragList = (props) => {
       <DragDropContext onDragEnd={onDragEnd}>
         <ListGrid
           numberOfCol={numberOfCol()}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5,1fr)",
-          }}
         >
           {state.lists.map((listKey, index) => (
             <DraggableElement
@@ -127,6 +127,7 @@ const DragList = (props) => {
               }
               key={index}
               prefix={listKey.name}
+              update = {props.update}
             />
           ))}
         </ListGrid>

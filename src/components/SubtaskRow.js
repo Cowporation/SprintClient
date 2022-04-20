@@ -94,6 +94,17 @@ const SubtaskRow = (props) => {
       });
       let json = await response.json();
       console.log(json);
+      if(response.ok){
+        setState({
+          contactServer: true,
+          msg: `User ${selectedSubtaskUser.firstName} added to ${props.row.name}`,
+        });
+      }else{
+        setState({
+          contactServer: true,
+          msg: `${json.msg}`,
+        });
+      }
       props.refresh();
       setSelectedSubtaskUser(null);
     } catch (error) {
@@ -126,7 +137,17 @@ const SubtaskRow = (props) => {
         body: JSON.stringify(data),
       });
       let json = await response.json();
-      console.log(json);
+      if(response.ok){
+        setState({
+          contactServer: true,
+          msg: `Hours update successful`,
+        });
+      }else{
+        setState({
+          contactServer: true,
+          msg: `${json.msg}`,
+        });
+      }
       props.refresh();
       calculateHoursForStory();
     } catch (error) {
