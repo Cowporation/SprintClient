@@ -113,13 +113,7 @@ const DragList = (props) => {
   return (
     <DragDropContextContainer>
       <DragDropContext onDragEnd={onDragEnd}>
-        <ListGrid
-          numberOfCol={numberOfCol()}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5,1fr)",
-          }}
-        >
+        <ListGrid numberOfCol={numberOfCol()}>
           {state.lists.map((listKey, index) => (
             <DraggableElement
               elements={
