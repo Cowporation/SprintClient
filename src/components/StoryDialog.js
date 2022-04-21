@@ -18,7 +18,7 @@ import {
 import { statesContext } from "./StoryLists";
 import React, { useEffect, useContext } from "react";
 import SubtaskTable from "./SubtaskTable";
-const SERVER = "http://localhost:5001/";
+const SERVER = "http://localhost:5000/";
 const StoryDialog = (props) => {
   const { state, setState } = useContext(statesContext);
   const addNewSubtask = async () => {
@@ -36,12 +36,12 @@ const StoryDialog = (props) => {
         body: JSON.stringify(data),
       });
       let json = await response.json();
-      if(response.ok){
+      if (response.ok) {
         setState({
           contactServer: true,
           msg: `Subtask ${state.newSubtaskName} added`,
         });
-      }else{
+      } else {
         setState({
           contactServer: true,
           msg: `${json.msg}`,

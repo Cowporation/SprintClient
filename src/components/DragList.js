@@ -27,18 +27,18 @@ const addToList = (list, index, element) => {
   return result;
 };
 
-const SERVER = "http://localhost:5001/";
+const SERVER = "http://localhost:5000/";
 const DragList = (props) => {
   const { state, setState } = useContext(statesContext);
   //const [elements, setElements] = React.useState();
   //const lists = props.lists;
   const numberOfCol = () => {
     let col = "";
-    if(state.lists.length < 5){
+    if (state.lists.length < 5) {
       for (let i = 0; i < state.lists.length; ++i) {
         col += "1fr ";
       }
-    }else{
+    } else {
       col = "repeat(5,1fr)";
     }
     return col;
@@ -117,13 +117,7 @@ const DragList = (props) => {
   return (
     <DragDropContextContainer>
       <DragDropContext onDragEnd={onDragEnd}>
-<<<<<<< HEAD
         <ListGrid numberOfCol={numberOfCol()}>
-=======
-        <ListGrid
-          numberOfCol={numberOfCol()}
-        >
->>>>>>> 9164a91a77d325f5a7294ee5f30d14a19601f64d
           {state.lists.map((listKey, index) => (
             <DraggableElement
               elements={
@@ -131,7 +125,7 @@ const DragList = (props) => {
               }
               key={index}
               prefix={listKey.name}
-              update = {props.update}
+              update={props.update}
             />
           ))}
         </ListGrid>

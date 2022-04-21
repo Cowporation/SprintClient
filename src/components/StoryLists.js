@@ -11,7 +11,7 @@ import theme from "../theme";
 import { Paper, Snackbar, Box, TextField, Button, Slide } from "@mui/material";
 import StoryDialog from "./StoryDialog";
 
-const SERVER = "http://localhost:5001/";
+const SERVER = "http://localhost:5000/";
 export const statesContext = createContext();
 const StoryLists = () => {
   const initialState = {
@@ -26,7 +26,7 @@ const StoryLists = () => {
     selectedStoryUsers: [],
     newSubtaskName: "",
     contactServer: false,
-    msg: ""
+    msg: "",
   };
   const reducer = (state, newState) => ({ ...state, ...newState });
   const [state, setState] = useReducer(reducer, initialState);
@@ -90,7 +90,9 @@ const StoryLists = () => {
   };
 
   const addNewSprint = async () => {
-    if(state.lists.filter(list => list.name ===state.newSprintName).length > 0){
+    if (
+      state.lists.filter((list) => list.name === state.newSprintName).length > 0
+    ) {
       setState({
         contactServer: true,
         msg: `${state.newSprintName} already exists; Please use a unique sprint name`,
@@ -113,7 +115,7 @@ const StoryLists = () => {
         contactServer: true,
         msg: `${json.msg}`,
       });
-      if(response.ok){
+      if (response.ok) {
         fetchStories(state.projects);
       }
     } catch (error) {
@@ -262,16 +264,16 @@ const StoryLists = () => {
               borderRadius: 2,
             }}
           >
-            <DragList update = {fetchStories}></DragList>
+            <DragList update={fetchStories}></DragList>
           </Paper>
         </Paper>
         <Snackbar
-        open={state.contactServer}
-        message={state.msg}
-        autoHideDuration={3000}
-        onClose={snackbarClose}
-        TransitionComponent={Slide}
-      ></Snackbar>
+          open={state.contactServer}
+          message={state.msg}
+          autoHideDuration={3000}
+          onClose={snackbarClose}
+          TransitionComponent={Slide}
+        ></Snackbar>
       </ThemeProvider>
     </statesContext.Provider>
   );

@@ -25,7 +25,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import UserHourRow from "./UserHourRow";
 import React, { useEffect, useContext, useState } from "react";
-const SERVER = "http://localhost:5001/";
+const SERVER = "http://localhost:5000/";
 
 const SubtaskRow = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -94,12 +94,12 @@ const SubtaskRow = (props) => {
       });
       let json = await response.json();
       console.log(json);
-      if(response.ok){
+      if (response.ok) {
         setState({
           contactServer: true,
           msg: `User ${selectedSubtaskUser.firstName} added to ${props.row.name}`,
         });
-      }else{
+      } else {
         setState({
           contactServer: true,
           msg: `${json.msg}`,
@@ -137,12 +137,12 @@ const SubtaskRow = (props) => {
         body: JSON.stringify(data),
       });
       let json = await response.json();
-      if(response.ok){
+      if (response.ok) {
         setState({
           contactServer: true,
           msg: `Hours update successful`,
         });
-      }else{
+      } else {
         setState({
           contactServer: true,
           msg: `${json.msg}`,

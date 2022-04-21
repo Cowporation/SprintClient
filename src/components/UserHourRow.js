@@ -24,7 +24,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import React, { useEffect, useContext, useState } from "react";
-const SERVER = "http://localhost:5001/";
+const SERVER = "http://localhost:5000/";
 
 const UserHourRow = (props) => {
   const [estHours, setEstHours] = React.useState(props.user.estHours);
