@@ -12,7 +12,6 @@ import { ThemeProvider } from "@mui/material/styles";
 import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 
 import theme from "./theme";
-import { fetchSprints } from "./components/fetcher.js";
 
 const App = () => {
   const pages = ["Home", "Projects", "Users", "Sprints", "About"];
@@ -58,7 +57,7 @@ const App = () => {
           </Container>
         </AppBar>
 
-        <Route path="/Projects" render={(props) => <ProjectMain />} />
+        <Route path="/Projects" component={ProjectMain} />
         <Route path="/About" component={About} />
         <Route path="/Home" component={Home} />
         <Route path="/Users" component={User} />

@@ -24,11 +24,10 @@ import {
   FormControl,
   IconButton,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import theme from "../theme";
 //import "../App.css";
-const SERVER = "http://localhost:5000/";
+const SERVER = "http://localhost:5001/";
 const UserComponent = () => {
   const initialState = {
     msg: "",

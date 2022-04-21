@@ -25,7 +25,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import UserHourRow from "./UserHourRow";
 import React, { useEffect, useContext, useState } from "react";
-const SERVER = "http://localhost:5000/";
+const SERVER = "http://localhost:5001/";
 
 const SubtaskRow = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -37,18 +37,20 @@ const SubtaskRow = (props) => {
     reestHours: 0,
   });
   const { state, setState } = useContext(statesContext);
-  React.useEffect(() => {calculateHoursForStory()}, []);
+  React.useEffect(() => {
+    calculateHoursForStory();
+  }, []);
   const calculateHoursForStory = () => {
     let data = {
       estHours: 0,
       actHours: 0,
       reestHours: 0,
     };
-    props.row.workedby.forEach(user =>{
-      data.estHours +=user.estHours;
-      data.actHours +=user.actHours;
-      data.reestHours +=user.reestHours;
-    })
+    props.row.workedby.forEach((user) => {
+      data.estHours += user.estHours;
+      data.actHours += user.actHours;
+      data.reestHours += user.reestHours;
+    });
     setWorkSummary(data);
   };
   const CustomPaper = (props) => {
@@ -92,6 +94,17 @@ const SubtaskRow = (props) => {
       });
       let json = await response.json();
       console.log(json);
+      if(response.ok){
+        setState({
+          contactServer: true,
+          msg: `User ${selectedSubtaskUser.firstName} added to ${props.row.name}`,
+        });
+      }else{
+        setState({
+          contactServer: true,
+          msg: `${json.msg}`,
+        });
+      }
       props.refresh();
       setSelectedSubtaskUser(null);
     } catch (error) {
@@ -124,7 +137,17 @@ const SubtaskRow = (props) => {
         body: JSON.stringify(data),
       });
       let json = await response.json();
-      console.log(json);
+      if(response.ok){
+        setState({
+          contactServer: true,
+          msg: `Hours update successful`,
+        });
+      }else{
+        setState({
+          contactServer: true,
+          msg: `${json.msg}`,
+        });
+      }
       props.refresh();
       calculateHoursForStory();
     } catch (error) {

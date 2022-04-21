@@ -73,6 +73,8 @@ const Project = (props) => {
   };
   const updateDescKeyPress = (e) => {
     if (e.key === "Enter") {
+      e.preventDefault();
+
       props.updateProject({ ...props.project, description: e.target.value });
     }
   };

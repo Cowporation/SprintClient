@@ -153,6 +153,16 @@ const NewProject = (props) => {
       storyPointHours: state.storyPointHours,
       stories: state.stories,
     });
+
+    setState({
+      name: "",
+      description: "",
+      startYear: moment().format("YYYY"),
+      startMonth: moment().format("MM"),
+      startDay: moment().format("DD"),
+      storyPointHours: 0,
+      stories: [],
+    });
   };
   const requiredEntry =
     state.name === null ||
@@ -204,7 +214,7 @@ const NewProject = (props) => {
                 sx={{ width: "30%" }}
                 select
                 label="Month"
-                value={
+                defaultValue={
                   props.selectedDate
                     ? moment(props.selectedDate).format("MM")
                     : state.startMonth
@@ -216,7 +226,7 @@ const NewProject = (props) => {
                 </MenuItem>
                 {months.map((month) => (
                   <MenuItem key={month} value={month.format("MM")}>
-                    {month.clone().format("MM")}
+                    {month.format("MM")}
                   </MenuItem>
                 ))}
               </TextField>
@@ -226,7 +236,7 @@ const NewProject = (props) => {
                 sx={{ width: "30%" }}
                 select
                 label="Day"
-                value={
+                defaultValue={
                   props.selectedDate
                     ? moment(props.selectedDate).format("DD")
                     : state.startDay
@@ -247,7 +257,7 @@ const NewProject = (props) => {
                 sx={{ width: "30%" }}
                 label="Year"
                 select
-                value={
+                defaultValue={
                   props.selectedDate
                     ? moment(props.selectedDate).format("YYYY")
                     : state.startYear
