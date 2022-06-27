@@ -157,7 +157,7 @@ const Projects = ({ projectId, selectedDate, view, getProject }) => {
                   view === "dash" ? "repeat(2,1fr)" : "repeat(6, 1fr)",
                 color: theme.palette.primary.light,
                 padding: view === "dash" ? "2px 2px 0 0" : "4px 4px 0 0",
-                width: view === "dash" ? "400px" : "100%",
+                width: view === "dash" ? "400px" : "100vh",
                 minWidth: view === "dash" ? "400px" : "860px",
               }}
             >
@@ -237,12 +237,13 @@ const Projects = ({ projectId, selectedDate, view, getProject }) => {
                     onClick={() => view === "dash" && getStory(project._id)}
                     style={{
                       cursor: view === "dash" && "pointer",
+                      width: view === "dash" ? "400px" : "100vh",
                       color:
                         viewId === project._id && view === "dash"
                           ? theme.palette.secondary.main
                           : theme.palette.secondary.light,
 
-                      border: view === "dash" && `1px solid rgba(0,0,0,0.4)`,
+                      border: view === "dash" && `0.1px solid rgba(0,0,0,0.4)`,
                     }}
                   >
                     <Project

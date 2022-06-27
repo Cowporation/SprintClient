@@ -210,9 +210,10 @@ const ProjectMain = () => {
           <Box
             style={{
               padding: "2rem",
-              paddingTop: "8rem",
+              paddingTop: "6rem",
               height: "100%",
               marginLeft: "400px",
+              overflowY:"hidden"
             }}
           >
             <Typography
