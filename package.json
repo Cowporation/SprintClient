@@ -21,7 +21,7 @@
     "chroma-js": "^2.1.2",
     "crypto-browserify": "^3.12.0",
     "css-what": "^5.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "file-saver": "^2.0.5",
     "framer-motion": "^3.10.6",
     "gh-pages": "^3.2.3",
